@@ -7,6 +7,16 @@ document.getElementById('adicionar').addEventListener('click', function() {
         var li = document.createElement('li');
         
         // Cria a estrutura do item
+        var itemHTML = '<strong>' + tag + '</strong> - ' + descricao
+document.getElementById('adicionar').addEventListener('click', function() {
+    var tag = document.getElementById('tag').value;
+    var descricao = document.getElementById('descricao').value;
+    var quantidade = document.getElementById('quantidade').value;
+    
+    if (tag && descricao) {
+        var li = document.createElement('li');
+        
+        // Cria a estrutura do item
         var itemHTML = '<strong>' + tag + '</strong> - ' + descricao + ' <span class="quantity">(' + quantidade + ')</span>';
         
         // Adiciona os botões de remover e atualizar quantidade
