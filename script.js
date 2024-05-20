@@ -1,43 +1,61 @@
 // Função para salvar os dados no localStorage
-function saveDataToLocalStorage(data) {
+function saveData(data) {
     localStorage.setItem('instrumentsData', JSON.stringify(data));
 }
 
 // Função para carregar os dados do localStorage
-function loadDataFromLocalStorage() {
-    var data = localStorage.getItem('instrumentsData');
-    return data ? JSON.parse(data) : [];
+function loadData() {
+    return localStorage.getItem('instrumentsData') ? JSON.parse(localStorage.getItem('instrumentsData')) : [];
 }
-
-// Função para adicionar um novo item ou atualizar a quantidade
-function addOrUpdateInstrument(tag, descricao, quantidade) {
-    var instrumentsData = loadDataFromLocalStorage();
-    var existingIndex = instrumentsData.findIndex(item => item.tag === tag);
+// Função para adicionar um novo instrumento ou atualizar a quantidade
+function addInstrument(tag, descricao, quantidade) {
+    let instrumentsData = loadData();
+    let existingIndex = instrumentsData.findIndex(item => item.tag === tag);
     
     if (existingIndex !== -1) {
         // Atualiza a quantidade se o item já existir
-        instrumentsData[existingIndex].quantidade = quantidade;
+        instrumentsData[existingIndex].quantidade += quantidade;
     } else {
         // Adiciona um novo item
-        instrumentsData.push({ tag: tag, descricao: descricao, quantidade: quantidade });
+        instrumentsData.push({ tag, descricao, quantidade });
     }
     
-    saveDataToLocalStorage(instrumentsData);
+    saveData(instrumentsData);
     displayInstrumentsList(instrumentsData);
+}
+
+// Função para remover um instrumento
+function removeInstrument(tag) {
+    let instrumentsData = loadData();
+    let updatedData = instrumentsData.filter(item => item.tag !== tag);
+    saveData(updatedData);
+    displayInstrumentsList(updatedData);
+}
+
+// Função para atualizar a quantidade de um instrumento
+function updateQuantity(tag, novaQuantidade) {
+    let instrumentsData = loadData();
+    let index = instrumentsData.findIndex(item => item.tag === tag);
+    if (index !== -1) {
+        instrumentsData[index].quantidade = novaQuantidade;
+        saveData(instrumentsData);
+        displayInstrumentsList(instrumentsData);
+    }
 }
 
 // Função para exibir a lista de instrumentos
 function displayInstrumentsList(data) {
+    const instrumentList = document.getElementById('instrumentList');
     instrumentList.innerHTML = '';
-    
-    data.forEach(function(item) {
+
+    data.forEach(item => {
         const listItem = document.createElement('li');
         listItem.innerHTML = `
-          <span class="tag">${item.tag}</span> -
-          <span class="descricao">${item.descricao}</span> -
-          <span class="quantidade">Quantidade: ${item.quantidade}</span>
-          <button class="remover" data-tag="${item.tag}">Remover</button>
-          <button class="atualizar" data-tag="${item.tag}">Atualizar Quantidade</button>
+            <span class="tag">${item.tag}</span> -
+            <span class="descricao">${item.descricao}</span> -
+            <span class="quantidade">Quantidade: ${item.quantidade}</span>
+            <button class="remover" data-tag="${item.tag}">Remover</button>
+            <button class="atualizar" data-tag="${item.tag}">Atualizar Quantidade</button>
         `;
         instrumentList.appendChild(listItem);
 
@@ -48,49 +66,10 @@ function displayInstrumentsList(data) {
 
         // Adicionar evento de clique para atualizar a quantidade
         listItem.querySelector('.atualizar').addEventListener('click', function() {
-            updateQuantity(this.dataset.tag);
+            const newQuantity = prompt("Digite a nova quantidade:", item.quantidade);
+            if (newQuantity !== null && !isNaN(newQuantity)) {
+                updateQuantity(item.tag, parseInt(newQuantity, 10));
+            }
         });
     });
 }
-// Função para remover um item
-function removeInstrument(tag) {
-    var instrumentsData = loadDataFromLocalStorage();
-    var updatedData = instrumentsData.filter(item => item.tag !== tag);
-    saveDataToLocalStorage(updatedData);
-    displayInstrumentsList(updatedData);
-}
-
-// Função para atualizar a quantidade de um item
-function updateQuantity(tag) {
-    var novaQuantidade = prompt("Digite a nova quantidade:", quantidade);
-    if (novaQuantidade !== null && !isNaN(novaQuantidade)) {
-        var instrumentsData = loadDataFromLocalStorage();
-        var index = instrumentsData.findIndex(item => item.tag === tag);
-        if (index !== -1) {
-            instrumentsData[index].quantidade = parseInt(novaQuantidade, 10);
-            saveDataToLocalStorage(instrumentsData);
-            displayInstrumentsList(instrumentsData);
-        }
-    }
-}
-document.addEventListener('DOMContentLoaded', function() {
-    var instrumentsData = loadDataFromLocalStorage();
-    displayInstrumentsList(instrumentsData);
-});
-// Adicionar evento de clique para o botão Adicionar
-adicionarButton.addEventListener('click', () => {
-    const tag = tagInput.value;
-    const descricao = descricaoInput.value;
-    const quantidade = parseInt(quantidadeInput.value, 10);
-
-    if (tag && descricao && !isNaN(quantidade)) {
-        addOrUpdateInstrument(tag, descricao, quantidade);
-        
-        // Limpar campos de entrada
-        tagInput.value = '';
-        descricaoInput.value = '';
-        quantidadeInput.value = '1';
-    } else {
-        alert("Por favor, preencha todos os campos com dados válidos!");
-    }
-});
