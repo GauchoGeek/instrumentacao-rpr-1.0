@@ -1,39 +1,52 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Estoque - Instrumentação</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <link rel="stylesheet" href="css/styles.css"> <!-- Adicione seu próprio arquivo CSS -->
+    <title>Sistema de Estoque - Instrumentação Riograndense</title>
 </head>
 <body>
-    <h1>Sistema de Estoque de Instrumentos</h1>
-    
-    <form id="formAdicionar">
-        <label for="descricao">Descrição:</label>
-        <input type="text" id="descricao" name="descricao" required>
-        <label for="tag">TAG:</label>
-        <input type="text" id="tag" name="tag" required>
-        <button type="submit">Adicionar</button>
-    </form>
-    
-    <form id="formRemover">
-        <label for="removerTag">Remover por TAG:</label>
-        <input type="text" id="removerTag" name="removerTag" required>
-        <button type="submit">Remover</button>
-    </form>
-    
-    <table>
-        <thead>
-            <tr>
-                <th>Descrição</th>
-                <th>TAG</th>
-            </tr>
-        </thead>
-        <tbody id="instrumentTable">
-        </tbody>
-    </table>
-    
-    <script src="script.js"></script>
+    <div id="app">
+        <div class="container">
+            <div class="header">
+                <h1 class="title is-1">Sistema de Estoque - Instrumentação Riograndense</h</h1>
+                <p class="subtitle is-3">Gerenciamento eficiente de instrumentos</p>
+            </div>
+            <div class="columns">
+                <div class="column is-6">
+                    <input class="input" type="text" v-model="novoInstrumento.descricao" placeholder="Descrição do instrumento">
+                </div>
+                <div class="column is-4">
+                    <input class="input" type="text" v-model="novoInstrumento.tag" placeholder="TAG do instrumento">
+                </div>
+                <div class="column is is-narrow">
+                    <button class="button is-success" @click="adicionarInstrumento">Adicionar</button>
+                </div>
+            </div>
+            <br>
+            <table class="table is-striped is-hoverable">
+                <thead>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>TAG</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="instrumento in instrumentos" :key="instrumento.id">
+                        <td>{{ instrumento.descricao }}</td>
+                        <td>{{ instrumento.tag }}</td>
+                        <td>
+                            <button class="button is-danger is-small" @click="removerInstrumento(instrumento.id)">Remover</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="js/main.js"></script> <!-- Atualize o caminho para o arquivo main.js -->
 </body>
 </html>
