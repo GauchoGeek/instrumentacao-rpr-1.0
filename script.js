@@ -32,6 +32,10 @@ function removeInstrument(tag) {
     displayInstrumentsList(updatedData);
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    var instrumentsData = loadDataFromLocalStorage();
+    displayInstrumentsList(instrumentsData);
+});
 // Função para atualizar a quantidade de um instrumento
 function updateQuantity(tag, novaQuantidade) {
     let instrumentsData = loadData();
