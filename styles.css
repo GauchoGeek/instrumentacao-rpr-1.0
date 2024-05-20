@@ -1,105 +1,114 @@
-/* styles.css */
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema de Instrumentação</title>
+<style>
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+  font-family: sans-serif;
 }
 
-#app {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+h1, h2 {
+  text-align: center;
 }
 
-h1 {
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center;
+.input-area, .instrument-list {
+  width: 50%;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-.input-area {
-    margin-bottom: 20px;
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
-.input-area label {
-    display: block;
-    margin-bottom: 5px;
-    color: #555;
+input[type="text"], textarea, input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-sizing: border-box;
 }
 
-.input-area input[type="text"],
-.input-area textarea,
-.input-area input[type="number"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
 }
 
-.input-area button {
-    padding: 10px 20px;
-    color: #fff;
-    background-color: #333;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.input-area button:hover {
-    background-color: #555;
-}
-
-.instrument-list h2 {
-    color: #333;
-    margin-bottom: 10px;
+button:hover {
+  background-color: #45a049;
 }
 
 .instrument-list ul {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 .instrument-list li {
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 4px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
 }
 
-.instrument-list li strong {
-    color: #ff6600; /* Cor laranja para a TAG no item da lista */
+.tag {
+  font-weight: bold;
+  color: blue;
 }
 
-.instrument-list li .quantity {
-    color: #339933; /* Cor verde para a quantidade no item da lista */
-    font-weight: bold;
+.descricao {
+  font-style: italic;
 }
 
-.instrument-list .remove-btn {
-    background-color: #ff6600;
-    color: #fff;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: 10px;
+.quantidade {
+  font-weight: bold;
 }
 
-.instrument-list .update-quantity-btn {
-    background-color: #339933;
-    color: #fff;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+.remover {
+  background-color: #f44336;
+  margin-left: 10px;
 }
 
-.instrument-list .remove-btn:hover,
-.instrument-list .update-quantity-btn:hover {
-    opacity: 0.8;
+.atualizar {
+  background-color: #ff9800;
+  margin-left: 10px;
 }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <h1>Sistema de Instrumentação</h1>
+  
+  <div class="input-area">
+    <label for="tag">TAG:</label>
+    <input type="text" id="tag" placeholder="Ex: TAG123">
+    
+    <label for="descricao">Descrição:</label>
+    <textarea id="descricao" placeholder="Descrição do instrumento"></textarea>
+
+    <label for="quantidade">Quantidade:</label>
+    <input type="number" id="quantidade" value="1" min="1">
+    
+    <button id="adicionar">Adicionar</button>
+  </div>
+  
+  <div class="instrument-list">
+    <h2>Lista de Instrumentos</h2>
+    <ul id="instrumentList"></ul>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
