@@ -1,23 +1,24 @@
-var app = new Vue({
-    el: '#app',
-    data: {
-        instrumentos: [],
-        novoInstrumento: {
-            descricao: '',
-            tag: '',
-            id: 0
-        }
-    },
-    methods: {
-        adicionarInstrumento() {
-            if (this.novoInstrumento.descricao && this.novoInstrumento.tag) {
-                this.novoInstrumento.id = Date.now(); // Gerar um ID único
-                this.instrumentos.push(this.novoInstrumento);
-                this.novoInstrumento = { descricao: '', tag: '', id: 0 };
-            }
-        },
-        removerInstrumento(id) {
-            this.instrumentos = this.instrumentos.filter(instrumento => instrumento.id !== id);
-        }
-    }
+document.getElementById('instrument-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const tag = document.getElementById('tag').value;
+    const description = document.getElementById('description').value;
+    const quantity = document.getElementById('quantity').value;
+
+    const table = document.getElementById('inventory-table').getElementsByTagName('tbody')[0];
+    const newRow = table.insertRow();
+
+    newRow.innerHTML = `
+        <td>${tag}</td>
+        <td>${description}</td>
+        <td>${quantity}</td>
+        <td><button onclick="deleteRow(this)">Excluir</button></td>
+    `;
+
+    document.getElementById('instrument-form').reset();
 });
+
+function deleteRow(button) {
+    const row = button.parentElement.parentElement;
+    row.remove();
+}
