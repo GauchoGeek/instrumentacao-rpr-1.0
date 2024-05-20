@@ -1,138 +1,44 @@
-document.getElementById('adicionar').addEventListener('click', function() {
-    var tag = document.getElementById('tag').value;
-    var descricao = document.getElementById('descricao').value;
-    var quantidade = document.getElementById('quantidade').value;
-    
-    if (tag && descricao) {
-        var li = document.createElement('li');
-        
-        // Cria a estrutura do item
-        var itemHTML = '<strong>' + tag + '</strong> - ' + descricao + ' (' + quantidade + ')';
-        
-        // Adiciona os botões de remover e atualizar quantidade
-        itemHTML += ' <button class="remove-btn">Remover</button> <button class="update-quantity-btn">Atualizar Quantidade</button>';
-        
-        li.innerHTML = itemHTML;
-        
-        // Adiciona o item à lista
-        var instrumentList = document.getElementById('instrumentList');
-        instrumentList.appendChild(li);
-        
-        // Adiciona o evento de clique para o botão remover
-        li.querySelector('.remove-btn').addEventListener('click', function() {
-            li.remove();
-        });
+// script.js
+const tagInput = document.getElementById('tag');
+const descricaoInput = document.getElementById('descricao');
+const quantidadeInput = document.getElementById('quantidade');
+const adicionarButton = document.getElementById('adicionar');
+const instrumentList = document.getElementById('instrumentList');
 
-        // Função para salvar os dados no localStorage
-function saveDataToLocalStorage(data) {
-    localStorage.setItem('instrumentsData', JSON.stringify(data));
-}
+adicionarButton.addEventListener('click', () => {
+  const tag = tagInput.value;
+  const descricao = descricaoInput.value;
+  const quantidade = parseInt(quantidadeInput.value, 10);
 
-// Função para carregar os dados do localStorage
-function loadDataFromLocalStorage() {
-    var data = localStorage.getItem('instrumentsData');
-    if (data) {
-        return JSON.parse(data);
-    }
-    return [];
-}
+  if (tag && descricao && quantidade) {
+    const listItem = document.createElement('li');
+    listItem.innerHTML = `
+      <span class="tag">${tag}</span> -
+      <span class="descricao">${descricao}</span> -
+      <span class="quantidade">Quantidade: ${quantidade}</span>
+      <button class="remover">Remover</button>
+      <button class="atualizar">Atualizar Quantidade</button>
+    `;
+    instrumentList.appendChild(listItem);
 
-// Função para adicionar um novo item ou atualizar a quantidade
-function addOrUpdateInstrument(tag, descricao, quantidade) {
-    var instrumentsData = loadDataFromLocalStorage();
-    var existingIndex = instrumentsData.findIndex(item => item.tag === tag);
-    
-    if (existingIndex !== -1) {
-        // Atualiza a quantidade se o item já existir
-        instrumentsData[existingIndex].quantidade = quantidade;
-    } else {
-        // Adiciona um novo item
-        instrumentsData.push({ tag: tag, descricao: descricao, quantidade: quantidade });
-    }
-    
-    saveDataToLocalStorage(instrumentsData);
-    displayInstrumentsList(instrumentsData);
-}
+    // Limpar campos de entrada
+    tagInput.value = '';
+    descricaoInput.value = '';
+    quantidadeInput.value = '1';
 
-// Função para exibir a lista de instrumentos
-function displayInstrumentsList(data) {
-    var instrumentList = document.getElementById('instrumentList');
-    instrumentList.innerHTML = '';
-    
-    data.forEach(function(item) {
-        var li = document.createElement('li');
-        var itemHTML = '<strong>' + item.tag + '</strong> - ' + item.descricao + ' <span class="quantity">(' + item.quantidade + ')</span>';
-        itemHTML += ' <button class="remove-btn" data-tag="' + item.tag + '">Remover</button> <button class="update-quantity-btn" data-tag="' + item.tag + '">Atualizar Quantidade</button>';
-        li.innerHTML = itemHTML;
-        
-        // Adiciona o evento de clique para o botão remover
-        li.querySelector('.remove-btn').addEventListener('click', function() {
-            removeInstrument(this.dataset.tag);
-        });
-        
-        // Adiciona o evento de clique para o botão atualizar quantidade
-        li.querySelector('.update-quantity-btn').addEventListener('click', function() {
-            updateQuantity(this.dataset.tag);
-        });
-        
-        instrumentList.appendChild(li);
+    // Adicionar evento de clique para remover o item
+    listItem.querySelector('.remover').addEventListener('click', () => {
+      instrumentList.removeChild(listItem);
     });
-}
 
-// Função para remover um item
-function removeInstrument(tag) {
-    var instrumentsData = loadDataFromLocalStorage();
-    var updatedData = instrumentsData.filter(item => item.tag !== tag);
-    saveDataToLocalStorage(updatedData);
-    displayInstrumentsList(updatedData);
-}
-// Função para atualizar a quantidade de um item
-function updateQuantity(tag) {
-    var newQuantity = prompt('Digite a nova quantidade:');
-    if (newQuantity !== null && !isNaN(newQuantity) && newQuantity > 0) {
-        var instrumentsData = loadDataFromLocalStorage();
-        var index = instrumentsData.findIndex(item => item.tag === tag);
-        if (index !== -1) {
-            instrumentsData[index].quantidade = newQuantity;
-            saveDataToLocalStorage(instrumentsData);
-            displayInstrumentsList(instrumentsData);
-        }
-    }
-}
-// Chama a função para carregar os dados quando a página é carregada
-document.addEventListener('DOMContentLoaded', function() {
-    var instrumentsData = loadDataFromLocalStorage();
-    displayInstrumentsList(instrumentsData);
+    // Adicionar evento de clique para atualizar a quantidade
+    listItem.querySelector('.atualizar').addEventListener('click', () => {
+      const novaQuantidade = prompt("Digite a nova quantidade:", quantidade);
+      if (novaQuantidade !== null && !isNaN(novaQuantidade)) {
+        listItem.querySelector('.quantidade').textContent = `Quantidade: ${parseInt(novaQuantidade, 10)}`;
+      }
+    });
+  } else {
+    alert("Por favor, preencha todos os campos!");
+  }
 });
-
-// Adiciona o evento de clique para o botão Adicionar
-document.getElementById('adicionar').addEventListener('click', function() {
-    var tag = document.getElementById('tag').value;
-    var descricao = document.getElementById('descricao').value;
-    var quantidade = document.getElementById('quantidade').value;
-    
-    if (tag && descricao) {
-        addOrUpdateInstrument(tag, descricao, quantidade);
-        
-        // Limpa os campos de entrada
-        document.getElementById('tag').value = '';
-        document.getElementById('descricao').value = '';
-        document.getElementById('quantidade').value = '1';
-    }
-});
-    
-        // Adiciona o evento de clique para o botão atualizar quantidade
-        li.querySelector('.update-quantity-btn').addEventListener('click', function() {
-            var newQuantity = prompt('Digite a nova quantidade:', quantidade);
-            if (newQuantity !== null && !isNaN(newQuantity) && newQuantity > 0) {
-                li.innerHTML = li.innerHTML.replace(/\([\d]+\)/, '(' + newQuantity + ')');
-            }
-        });
-        
-        // Limpa os campos de entrada
-        document.getElementById('tag').value = '';
-        document.getElementById('descricao').value = '';
-        document.getElementById('quantidade').value = '1';
-    }
-});
-
