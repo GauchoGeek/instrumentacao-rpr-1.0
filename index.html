@@ -1,28 +1,32 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Estoque - Refinaria de Petróleo Riograndense</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema de Instrumentação</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <h1>Gerenciamento de Estoque</h1>
-  </header>
-  <main>
-    <table id="inventoryTable">
-      <thead>
-        <tr>
-          <th>Item</th>
-          <th>Quantidade</th>
-          <th>Ação</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Os dados do estoque serão adicionados dinamicamente aqui -->
-      </tbody>
-    </table>
-  </main>
-  <script src="script.js"></script>
+
+<div id="app">
+  <h1>Sistema de Instrumentação</h1>
+  
+  <div class="input-area">
+    <label for="tag">TAG:</label>
+    <input type="text" id="tag" placeholder="Ex: TAG123">
+    
+    <label for="descricao">Descrição:</label>
+    <textarea id="descricao" placeholder="Descrição do instrumento"></textarea>
+    
+    <button id="adicionar">Adicionar</button>
+  </div>
+  
+  <div class="instrument-list">
+    <h2>Lista de Instrumentos</h2>
+    <ul id="instrumentList"></ul>
+  </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
