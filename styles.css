@@ -4,6 +4,10 @@ body {
     font-family: Arial, sans-serif;
 }
 
+.input-area {
+    margin-bottom: 20px;
+}
+
 .input-area label {
     display: block;
     margin-bottom: 5px;
@@ -22,6 +26,28 @@ body {
     color: green; /* Cor verde para o label Quantidade */
 }
 
+.input-area input[type="text"],
+.input-area textarea,
+.input-area input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.input-area button {
+    padding: 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.input-area button#adicionar {
+    background-color: #333;
+}
+
 .instrument-list h2 {
     color: #333;
     margin-bottom: 10px;
@@ -36,6 +62,7 @@ body {
     margin-bottom: 10px;
     border: 1px solid #ddd;
     padding: 10px;
+    border-radius: 5px;
 }
 
 .instrument-list li strong {
@@ -47,16 +74,11 @@ body {
     font-weight: bold;
 }
 
-.remove-btn,
-.update-quantity-btn {
-    cursor: pointer;
-    margin-left: 5px;
+.instrument-list .remove-btn {
+    background-color: red;
+    margin-right: 10px;
 }
 
-.remove-btn {
-    color: red;
-}
-
-.update-quantity-btn {
-    color: green;
+.instrument-list .update-quantity-btn {
+    background-color: green;
 }
