@@ -1,114 +1,74 @@
-/* Geral */
 body {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f0f4f8;
-    color: #333;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0; /* Cor de fundo */
 }
 
-.container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
+#estoque {
+  width: 800px;
+  margin: 40px auto;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Cabeçalho */
-header {
-    background: #007bff;
-    color: white;
-    padding: 20px 0;
-    text-align: center;
+.estoque-item {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
 }
 
-header .logo {
-    max-width: 100px;
-    margin-bottom: 10px;
+.estoque-item:last-child {
+  border-bottom: none;
 }
 
-header h1 {
-    margin: 10px 0;
-    font-size: 2.5em;
+.button {
+  background-color: #4CAF50; /* Cor do botão adicionar */
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-header h2 {
-    margin: 0;
-    font-size: 1.5em;
+.button:hover {
+  background-color: #3e8e41; /* Cor do botão adicionar hover */
 }
 
-/* Seções */
-section {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+.button-remove {
+  background-color: #e74c3c; /* Cor do botão remover */
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-section h2 {
-    color: #007bff;
-    margin-bottom: 20px;
+.button-remove:hover {
+  background-color: #c23531; /* Cor do botão remover hover */
 }
 
-/* Formulário */
-form label {
-    display: block;
-    margin: 10px 0 5px;
+.selected {
+  background-color: #f2f2f2; /* Cor do item selecionado */
+  border: 1px solid #666;
 }
 
-form input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+tr:nth-child(even) {
+  background-color: #f2f2f2; /* Cor de fundo das linhas pares */
 }
 
-form button {
-    background: #28a745;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1em;
+tr:nth-child(odd) {
+  background-color: #fff; /* Cor de fundo das linhas ímpares */
 }
 
-form button:hover {
-    background: #218838;
+th {
+  background-color: #4CAF50; /* Cor de fundo da cabeçalho */
+  color: #fff;
+  padding: 10px;
+  border-bottom: 2px solid #333;
 }
 
-/* Tabela de inventário */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-table th, table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-}
-
-table th {
-    background: #007bff;
-    color: white;
-}
-
-table tr:nth-child(even) {
-    background: #f9f9f9;
-}
-
-/* Rodapé */
-footer {
-    background: #007bff;
-    color: white;
-    padding: 10px 0;
-    text-align: center;
-    margin-top: 20px;
-}
-
-footer p {
-    margin: 0;
+td {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
 }
