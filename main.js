@@ -1,47 +1,34 @@
-// script.js
-// Função para obter os dados do estoque da API ou banco de dados
-function getInventoryData() {
-  // Implemente a lógica para obter os dados do estoque
-  // e retorne um array com os itens do estoque
+document.addEventListener('DOMContentLoaded', function() {
+  const tagInput = document.getElementById('tag');
+  const descricaoInput = document.getElementById('descricao');
+  const adicionarBtn = document.getElementById('adicionar');
+  const instrumentList = document.getElementById('instrumentList');
+
+  // Carrega os instrumentos salvos anteriormente
+  const savedInstruments = JSON.parse(localStorage.getItem('instruments')) || [];
+  savedInstruments.forEach(displayInstrument);
+
+  // Adiciona um novo instrumento
+  adicionarBtn.addEventListener('click', function() {
+  const tag = tagInput.value.trim();
+  const descricao = descricaoInput.value.trim();
+
+  if (tag && descricao) {
+    const newInstrument = { tag, descricao };
+    displayInstrument(newInstrument);
+    savedInstruments.push(newInstrument);
+    localStorage.setItem('instruments', JSON.stringify(savedInstruments));
+    tagInput.value = '';
+    descricaoInput.value = '';
+    tagInput.focus();
+  } else {
+    alert('Por favor, preencha TAG e Descrição!');
+  }
+});
+
+function displayInstrument(instrument) {
+  const li = document.createElement('li');
+  li.innerHTML = `<strong>TAG:</strong> ${instrument.tag} <br> <strong>Descrição:</strong> ${instrument.descricao}`;
+  instrumentList.appendChild(li);
 }
-
-// Função para exibir os dados do estoque na tabela
-function displayInventoryData() {
-  const inventoryTable = document.getElementById('inventoryTable');
-  const inventoryData = getInventoryData();
-
-  inventoryData.forEach(item => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${item.name}</td>
-      <td>${item.quantity}</td>
-      <td>
-        <button onclick="updateQuantity(${item.id}, 1)">+</button>
-        <button onclick="updateQuantity(${item.id}, -1)">-</button>
-      </td>
-    inventoryTable.querySelector('tbody').appendChild(row);
-  });
-}
-
-// Função para atualizar a quantidade de um item do estoque
-function updateQuantity(itemId, amount) {
-  // Implemente a lógica para atualizar a quantidade do item no servidor
-  // e atualize a tabela do estoque em tempo real
-}
-
-// Função para salvar os dados do estoque ao atualizar a página
-function saveInventoryData() {
-  const inventoryData = getInventoryData();
-  localStorage.setItem('inventoryData', JSON.stringify(inventoryData));
-}
-
-// Carrega os dados do estoque ao carregar a página
-window.onload = function() {
-  displayInventoryData();
-};
-
-// Salva os dados do estoque ao atualizar a página
-window.onbeforeunload = function() {
-  saveInventoryData();
-};
-``
+}); // Fecha o evento DOMContentLoaded
