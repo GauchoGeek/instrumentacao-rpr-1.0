@@ -1,28 +1,64 @@
-
 body {
   font-family: Arial, sans-serif;
-  background-color: #f2f2f2;
+  background-color: #f4f4f4;
+  color: #333;
+  margin: 0;
+  padding: 20px;
 }
 
-header {
-  background-color: #ff6b6b;
-  color: white;
+#app {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
   padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: #ff6600;
   text-align: center;
 }
 
-table {
+.input-area {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input, textarea {
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-th, td {
   padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
 }
 
-tr:nth-child(even) {
-  background-color: #f9f9f9;
+textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+button {
+  background-color: #ff6600;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #ff8000;
+}
+
+.instrument-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.instrument-list li {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 10px;
 }
