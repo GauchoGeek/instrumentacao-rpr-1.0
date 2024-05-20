@@ -1,58 +1,107 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estoque de Instrumentos - Refinaria de Petróleo Riograndense</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+        <title>Gerenciamento de Estoques - Instrumentação da Refinaria</title>
+        <style>
+                body {
+                        background-color: #f0f0f0; /* Cor de fundo */
+                }
+                #estoque {
+                        width: 800px;
+                        margin: 40px auto;
+                        background-color: #fff;
+                        border: 1px solid #ddd;
+                        padding: 20px;
+                        border-radius: 10px;
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                }
+                .estoque-item {
+                        padding: 10px;
+                        border-bottom: 1px solid #ccc;
+                }
+                .estoque-item:last-child {
+                        border-bottom: none;
+                }
+                .button {
+                        background-color: #4CAF50; /* Cor do botão adicionar */
+                        color: #fff;
+                        padding: 10px 20px;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                }
+                .button:hover {
+                        background-color: #3e8e41;
+                }
+                .button-remove {
+                        background-color: #e74c3c; /* Cor do botão remover */
+                        color: #fff;
+                        padding: 10px 20px;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                }
+                .button-remove:hover {
+                        background-color: #c23531;
+                }
+        </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <img src="logo.png" alt="Logo da Refinaria de Petróleo Riograndense" class="logo">
-            <h1>Refinaria de Petróleo Riograndense</h1>
-            <h2>Estoque de Instrumentação</h2>
-        </div>
-    </header>
-    <main>
-        <div class="container">
-            <section class="form-section">
-                <h2>Adicionar Novo Instrumento</h2>
-                <form id="instrument-form">
-                    <label for="tag">TAG:</label>
-                    <input type="text" id="tag" required>
-                    <label for="description">Descrição:</label>
-                    <input type="text" id="description" required>
-                    <label for="quantity">Quantidade:</label>
-                    <input type="number" id="quantity" min="1" required>
-                    <button type="submit">Adicionar Instrumento</button>
-                </form>
-            </section>
-            
-            <section class="inventory-section">
-                <h2>Estoque Atual</h2>
-                <table id="inventory-table">
-                    <thead>
-                        <tr>
-                            <th>TAG</th>
-                            <th>Descrição</th>
-                            <th>Quantidade</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Os instrumentos serão adicionados aqui -->
-                    </tbody>
+        <div id="estoque">
+                <h1>Gerenciamento de Estoques - Instrumentação da Refinaria</h1>
+                <table>
+                        <thead>
+                                <tr>
+                                        <th>Código</th>
+                                        <th>Descrição</th>
+                                        <th>Quantidade</th>
+                                        <th>Ação</th>
+                                </tr>
+                        </thead>
+                        <tbody id="estoque-list">
+                                <!-- será preenchido com dados do estoque -->
+                        </tbody>
                 </table>
-            </section>
+                <button class="button" id="adicionar">Adicionar</button>
+                <button class="button-remove" id="remover">Remover</button>
         </div>
-    </main>
-    <footer>
-        <div class="container">
-            <p>© 2024 Refinaria de Petróleo Riograndense - Todos os direitos reservados</p>
-        </div>
-    </footer>
-    <script src="script.js"></script>
+
+        <script>
+                const estoqueList = document.getElementById('estoque-list');
+                const adicionarButton = document.getElementById('adicionar');
+                const removerButton = document.getElementById('remover');
+
+                adicionarButton.addEventListener('click', () => {
+                        // código para adicionar um novo item ao estoque
+                        const novoItem = {
+                                codigo: '123456',
+                                descricao: 'Instrumento de medição',
+                                quantidade: 10
+                        };
+                        estoqueList.innerHTML += `
+                                <tr>
+                                        <td>${novoItem.codigo}</td>
+                                        <td>${novoItem.descricao}</td>
+                                        <td>${novoItem.quantidade}</td>
+                                        <td><button class="button-remove">Remover</button></td>
+                                </tr>
+                        `;
+                });
+
+                removerButton.addEventListener('click', () => {
+                        // código para remover um item do estoque
+                        const selecionado = estoqueList.querySelector('tr.selected');
+                        if (selecionado) {
+                                estoqueList.removeChild(selecionado);
+                        }
+                });
+
+                estoqueList.addEventListener('click', (event) => {
+                        if (event.target.classList.contains('button-remove')) {
+                                const selecionado = event.target.parentNode.parentNode;
+                                selecionado.classList.add('selected');
+                        }
+                });
+        </script>
 </body>
 </html>
