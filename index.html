@@ -1,18 +1,41 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Gerenciamento de Estoque - Instrumentação</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Estoque - Refinaria</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="container">
+        <h1>Gerenciamento de Estoque</h1>
+        <div class="form">
+            <input type="text" id="instrument-name" placeholder="Nome do Instrumento">
+            <button onclick="addItem()">Adicionar</button>
+        </div>
+        <ul id="inventory-list"></ul>
+    </div>
 
-    <h1>Gerenciamento de Estoque - Instrumentação</h1>
-
-    <h2>Estoque Atual</h2>
-    <table id="estoqueAtual"></table>
-
-    <h2>Histórico de Alterações</h2>
-    <table id="historicoAlteracoes"></table>
-
-    <script src="script.js"></script> </body>
+    <script>
+        function addItem() {
+            var ul = document.getElementById("inventory-list");
+            var instrumentName = document.getElementById("instrument-name").value;
+            if (instrumentName.trim() === '') {
+                alert("Por favor, insira o nome do instrumento.");
+                return;
+            }
+            var li = document.createElement("li");
+            li.appendChild(document.createTextNode(instrumentName));
+            var removeButton = document.createElement("button");
+            removeButton.appendChild(document.createTextNode("Remover"));
+            removeButton.onclick = function() {
+                ul.removeChild(li);
+            };
+            li.appendChild(removeButton);
+            ul.appendChild(li);
+            document.getElementById("instrument-name").value = "";
+        }
+    </script>
+</body>
 </html>
