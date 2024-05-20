@@ -1,31 +1,28 @@
+
 <!DOCTYPE html>
-<html lang="pt">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciamento de Estoque - Refinaria</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script> <!-- Para ícones -->
+  <title>Estoque - Refinaria de Petróleo Riograndense</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Gerenciamento de Estoque da Refinaria</h1>
-        <div class="form">
-            <label for="instrument-name">Nome do Instrumento:</label>
-            <input type="text" id="instrument-name" placeholder="Ex: Válvula de Pressão">
-            <button onclick="addItem()" class="add-btn"><i class="fas fa-plus"></i> Adicionar</button>
-        </div>
-        <ul id="inventory-list"></ul>
-    </div>
-
-    <script>
-        function addItem() {
-            var ul = document.getElementById("inventory-list");
-            var instrumentName = document.getElementById("instrument-name").value;
-            if (instrumentName.trim() === '') {
-                alert("Por favor, insira o nome do instrumento.");
-                return;
-            }
-            var li = document.createElement("li");
-            li.appendChild(document.createTextNode(instrumentName));
-            var removeButton = document.createElement
+  <header>
+    <h1>Gerenciamento de Estoque</h1>
+  </header>
+  <main>
+    <table id="inventoryTable">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Quantidade</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Os dados do estoque serão adicionados dinamicamente aqui -->
+      </tbody>
+    </table>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
