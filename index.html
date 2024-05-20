@@ -1,21 +1,18 @@
-<table>
-    <tr>
-        <th>TAG</th>
-        <th>Descrição</th> 
-        <th>Quantidade</th>
-        <th>Ações</th>
-    </tr>
-    <tr>
-        <td>TAG123</td>
-        <td><input type="text" value="Transmissor de pressão"></td> 
-        <td><input type="number" value="5"></td> 
-        <td>
-            <button onclick="removerItem(this)">Remover</button>
-            <button onclick="adicionarItem(this)">Adicionar</button>
-        </td>
-    </tr>
-</table>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gerenciamento de Estoque - Instrumentação</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
-<script>
-    // ... (seu JavaScript aqui)
-</script>
+    <h1>Gerenciamento de Estoque - Instrumentação</h1>
+
+    <h2>Estoque Atual</h2>
+    <table id="estoqueAtual"></table>
+
+    <h2>Histórico de Alterações</h2>
+    <table id="historicoAlteracoes"></table>
+
+    <script src="script.js"></script> </body>
+</html>
