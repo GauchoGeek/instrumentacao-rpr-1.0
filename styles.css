@@ -2,6 +2,23 @@
 
 body {
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+#app {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 .input-area {
@@ -11,19 +28,7 @@ body {
 .input-area label {
     display: block;
     margin-bottom: 5px;
-    color: #333;
-}
-
-.input-area label[for="tag"] {
-    color: red; /* Cor vermelha para o label TAG */
-}
-
-.input-area label[for="descricao"] {
-    color: yellow; /* Cor amarela para o label Descrição */
-}
-
-.input-area label[for="quantidade"] {
-    color: green; /* Cor verde para o label Quantidade */
+    color: #555;
 }
 
 .input-area input[type="text"],
@@ -33,19 +38,20 @@ body {
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 4px;
 }
 
 .input-area button {
-    padding: 10px;
-    color: white;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #333;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
 }
 
-.input-area button#adicionar {
-    background-color: #333;
+.input-area button:hover {
+    background-color: #555;
 }
 
 .instrument-list h2 {
@@ -62,23 +68,38 @@ body {
     margin-bottom: 10px;
     border: 1px solid #ddd;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 4px;
 }
 
 .instrument-list li strong {
-    color: red; /* Cor vermelha para a TAG no item da lista */
+    color: #ff6600; /* Cor laranja para a TAG no item da lista */
 }
 
 .instrument-list li .quantity {
-    color: green; /* Cor verde para a quantidade no item da lista */
+    color: #339933; /* Cor verde para a quantidade no item da lista */
     font-weight: bold;
 }
 
 .instrument-list .remove-btn {
-    background-color: red;
+    background-color: #ff6600;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
     margin-right: 10px;
 }
 
 .instrument-list .update-quantity-btn {
-    background-color: green;
+    background-color: #339933;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.instrument-list .remove-btn:hover,
+.instrument-list .update-quantity-btn:hover {
+    opacity: 0.8;
 }
