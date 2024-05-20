@@ -1,34 +1,39 @@
-document.addEventListener('DOMContentLoaded', function() {
-  const tagInput = document.getElementById('tag');
-  const descricaoInput = document.getElementById('descricao');
-  const adicionarBtn = document.getElementById('adicionar');
-  const instrumentList = document.getElementById('instrumentList');
-
-  // Carrega os instrumentos salvos anteriormente
-  const savedInstruments = JSON.parse(localStorage.getItem('instruments')) || [];
-  savedInstruments.forEach(displayInstrument);
-
-  // Adiciona um novo instrumento
-  adicionarBtn.addEventListener('click', function() {
-  const tag = tagInput.value.trim();
-  const descricao = descricaoInput.value.trim();
-
-  if (tag && descricao) {
-    const newInstrument = { tag, descricao };
-    displayInstrument(newInstrument);
-    savedInstruments.push(newInstrument);
-    localStorage.setItem('instruments', JSON.stringify(savedInstruments));
-    tagInput.value = '';
-    descricaoInput.value = '';
-    tagInput.focus();
-  } else {
-    alert('Por favor, preencha TAG e Descrição!');
-  }
+document.getElementById('adicionar').addEventListener('click', function() {
+    var tag = document.getElementById('tag').value;
+    var descricao = document.getElementById('descricao').value;
+    var quantidade = document.getElementById('quantidade').value;
+    
+    if (tag && descricao) {
+        var li = document.createElement('li');
+        
+        // Cria a estrutura do item
+        var itemHTML = '<strong>' + tag + '</strong> - ' + descricao + ' (' + quantidade + ')';
+        
+        // Adiciona os botões de remover e atualizar quantidade
+        itemHTML += ' <button class="remove-btn">Remover</button> <button class="update-quantity-btn">Atualizar Quantidade</button>';
+        
+        li.innerHTML = itemHTML;
+        
+        // Adiciona o item à lista
+        var instrumentList = document.getElementById('instrumentList');
+        instrumentList.appendChild(li);
+        
+        // Adiciona o evento de clique para o botão remover
+        li.querySelector('.remove-btn').addEventListener('click', function() {
+            li.remove();
+        });
+        
+        // Adiciona o evento de clique para o botão atualizar quantidade
+        li.querySelector('.update-quantity-btn').addEventListener('click', function() {
+            var newQuantity = prompt('Digite a nova quantidade:', quantidade);
+            if (newQuantity !== null && !isNaN(newQuantity) && newQuantity > 0) {
+                li.innerHTML = li.innerHTML.replace(/\([\d]+\)/, '(' + newQuantity + ')');
+            }
+        });
+        
+        // Limpa os campos de entrada
+        document.getElementById('tag').value = '';
+        document.getElementById('descricao').value = '';
+        document.getElementById('quantidade').value = '1';
+    }
 });
-
-function displayInstrument(instrument) {
-  const li = document.createElement('li');
-  li.innerHTML = `<strong>TAG:</strong> ${instrument.tag} <br> <strong>Descrição:</strong> ${instrument.descricao}`;
-  instrumentList.appendChild(li);
-}
-}); // Fecha o evento DOMContentLoaded
