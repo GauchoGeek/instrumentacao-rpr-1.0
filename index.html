@@ -1,56 +1,58 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <title>Sistema de Estoque - Instrumentação Riograndense</title>
+    <title>Estoque de Instrumentos - Refinaria de Petróleo Riograndense</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
+    <header>
         <div class="container">
-            <div class="header">
-                <h1 class="title is-1">Sistema de Estoque - Instrumentação Riograndense</h1>
-                <p class="subtitle is-3">Gerenciamento eficiente de instrumentos</p>
-            </div>
-            <div class="columns">
-                <div class="column is-6">
-                    <input class="input" type="text" v-model="novoInstrumento.descricao" placeholder="Descrição do instrumento">
-                </div>
-                <div class="column is-4">
-                    <input class="input" type="text" v-model="novoInstrumento.tag" placeholder="TAG do instrumento">
-                </div>
-                <div class="column is-2">
-                    <button class="button is-success" @click="adicionarInstrumento">Adicionar</button>
-                </div>
-            </div>
-            <br>
-            <div class="columns">
-                <div class="column">
-                    <table class="table is-striped is-hoverable is-fullwidth">
-                        <thead>
-                            <tr>
-                                <th>Descrição</th>
-                                <th>TAG</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="instrumento in instrumentos" :key="instrumento.id">
-                                <td>{{ instrumento.descricao }}</td>
-                                <td>{{ instrumento.tag }}</td>
-                                <td>
-                                    <button class="button is-danger is-small" @click="removerInstrumento(instrumento.id)">Remover</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <img src="logo.png" alt="Logo da Refinaria de Petróleo Riograndense" class="logo">
+            <h1>Refinaria de Petróleo Riograndense</h1>
+            <h2>Estoque de Instrumentação</h2>
         </div>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
-    <script src="js/main.js"></script>
+    </header>
+    <main>
+        <div class="container">
+            <section class="form-section">
+                <h2>Adicionar Novo Instrumento</h2>
+                <form id="instrument-form">
+                    <label for="tag">TAG:</label>
+                    <input type="text" id="tag" required>
+                    <label for="description">Descrição:</label>
+                    <input type="text" id="description" required>
+                    <label for="quantity">Quantidade:</label>
+                    <input type="number" id="quantity" min="1" required>
+                    <button type="submit">Adicionar Instrumento</button>
+                </form>
+            </section>
+            
+            <section class="inventory-section">
+                <h2>Estoque Atual</h2>
+                <table id="inventory-table">
+                    <thead>
+                        <tr>
+                            <th>TAG</th>
+                            <th>Descrição</th>
+                            <th>Quantidade</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Os instrumentos serão adicionados aqui -->
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>© 2024 Refinaria de Petróleo Riograndense - Todos os direitos reservados</p>
+        </div>
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>
