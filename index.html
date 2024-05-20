@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
-    <link rel="stylesheet" href="css/styles.css"> <!-- Adicione seu próprio arquivo CSS -->
+    <link rel="stylesheet" href="css/styles.css">
     <title>Sistema de Estoque - Instrumentação Riograndense</title>
 </head>
 <body>
     <div id="app">
         <div class="container">
             <div class="header">
-                <h1 class="title is-1">Sistema de Estoque - Instrumentação Riograndense</h</h1>
+                <h1 class="title is-1">Sistema de Estoque - Instrumentação Riograndense</h1>
                 <p class="subtitle is-3">Gerenciamento eficiente de instrumentos</p>
             </div>
             <div class="columns">
@@ -21,32 +21,36 @@
                 <div class="column is-4">
                     <input class="input" type="text" v-model="novoInstrumento.tag" placeholder="TAG do instrumento">
                 </div>
-                <div class="column is is-narrow">
+                <div class="column is-2">
                     <button class="button is-success" @click="adicionarInstrumento">Adicionar</button>
                 </div>
             </div>
             <br>
-            <table class="table is-striped is-hoverable">
-                <thead>
-                    <tr>
-                        <th>Descrição</th>
-                        <th>TAG</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="instrumento in instrumentos" :key="instrumento.id">
-                        <td>{{ instrumento.descricao }}</td>
-                        <td>{{ instrumento.tag }}</td>
-                        <td>
-                            <button class="button is-danger is-small" @click="removerInstrumento(instrumento.id)">Remover</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="columns">
+                <div class="column">
+                    <table class="table is-striped is-hoverable is-fullwidth">
+                        <thead>
+                            <tr>
+                                <th>Descrição</th>
+                                <th>TAG</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="instrumento in instrumentos" :key="instrumento.id">
+                                <td>{{ instrumento.descricao }}</td>
+                                <td>{{ instrumento.tag }}</td>
+                                <td>
+                                    <button class="button is-danger is-small" @click="removerInstrumento(instrumento.id)">Remover</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
-    <script src="js/main.js"></script> <!-- Atualize o caminho para o arquivo main.js -->
+    <script src="js/main.js"></script>
 </body>
 </html>
