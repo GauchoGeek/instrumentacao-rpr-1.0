@@ -1,18 +1,20 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciamento de Estoque - Refinaria</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script> <!-- Para ícones -->
 </head>
 <body>
     <div class="container">
-        <h1>Gerenciamento de Estoque</h1>
+        <h1>Gerenciamento de Estoque da Refinaria</h1>
         <div class="form">
-            <input type="text" id="instrument-name" placeholder="Nome do Instrumento">
-            <button onclick="addItem()">Adicionar</button>
+            <label for="instrument-name">Nome do Instrumento:</label>
+            <input type="text" id="instrument-name" placeholder="Ex: Válvula de Pressão">
+            <button onclick="addItem()" class="add-btn"><i class="fas fa-plus"></i> Adicionar</button>
         </div>
         <ul id="inventory-list"></ul>
     </div>
@@ -28,7 +30,8 @@
             var li = document.createElement("li");
             li.appendChild(document.createTextNode(instrumentName));
             var removeButton = document.createElement("button");
-            removeButton.appendChild(document.createTextNode("Remover"));
+            removeButton.classList.add("remove-btn");
+            removeButton.innerHTML = '<i class="fas fa-trash"></i> Remover';
             removeButton.onclick = function() {
                 ul.removeChild(li);
             };
