@@ -1,74 +1,9 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0; /* Cor de fundo */
-}
+/* ... (seus estilos anteriores) */
 
-#estoque {
-  width: 800px;
-  margin: 40px auto;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.estoque-item {
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-}
-
-.estoque-item:last-child {
-  border-bottom: none;
-}
-
-.button {
-  background-color: #4CAF50; /* Cor do botão adicionar */
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.button:hover {
-  background-color: #3e8e41; /* Cor do botão adicionar hover */
-}
-
-.button-remove {
-  background-color: #e74c3c; /* Cor do botão remover */
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.button-remove:hover {
-  background-color: #c23531; /* Cor do botão remover hover */
-}
-
-.selected {
-  background-color: #f2f2f2; /* Cor do item selecionado */
-  border: 1px solid #666;
-}
-
-tr:nth-child(even) {
-  background-color: #f2f2f2; /* Cor de fundo das linhas pares */
-}
-
-tr:nth-child(odd) {
-  background-color: #fff; /* Cor de fundo das linhas ímpares */
-}
-
-th {
-  background-color: #4CAF50; /* Cor de fundo da cabeçalho */
-  color: #fff;
-  padding: 10px;
-  border-bottom: 2px solid #333;
-}
-
-td {
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
+input[type="text"], input[type="number"] { /* Estilos para os campos de entrada */
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
