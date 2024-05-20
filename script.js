@@ -13,7 +13,7 @@ function loadDataFromLocalStorage() {
 function addOrUpdateInstrument(tag, descricao, quantidade) {
     var instrumentsData = loadDataFromLocalStorage();
     var existingIndex = instrumentsData.findIndex(item => item.tag === tag);
-    
+
     if (existingIndex !== -1) {
         // Atualiza a quantidade se o item já existir
         instrumentsData[existingIndex].quantidade = quantidade;
@@ -21,17 +21,18 @@ function addOrUpdateInstrument(tag, descricao, quantidade) {
         // Adiciona um novo item
         instrumentsData.push({ tag: tag, descricao: descricao, quantidade: quantidade });
     }
-    
+
     saveDataToLocalStorage(instrumentsData);
     displayInstrumentsList(instrumentsData);
 }
 
 // Função para exibir a lista de instrumentos
 function displayInstrumentsList(data) {
+    var instrumentList = document.getElementById('instrumentList');
     instrumentList.innerHTML = '';
-    
+
     data.forEach(function(item) {
-        const listItem = document.createElement('li');
+        var listItem = document.createElement('li');
         listItem.innerHTML = `
           <span class="tag">${item.tag}</span> -
           <span class="descricao">${item.descricao}</span> -
@@ -63,7 +64,7 @@ function removeInstrument(tag) {
 
 // Função para atualizar a quantidade de um item
 function updateQuantity(tag) {
-    var novaQuantidade = prompt("Digite a nova quantidade:", quantidade);
+    var novaQuantidade = prompt("Digite a nova quantidade:", '');
     if (novaQuantidade !== null && !isNaN(novaQuantidade)) {
         var instrumentsData = loadDataFromLocalStorage();
         var index = instrumentsData.findIndex(item => item.tag === tag);
@@ -82,19 +83,18 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Adicionar evento de clique para o botão Adicionar
-adicionarButton.addEventListener('click', () => {
-    const tag = tagInput.value;
-    const descricao = descricaoInput.value;
+document.getElementById('adicionarButton').addEventListener('click', function() {
+    var tag = document.getElementById('tagInput').value;
+    var descricao = document.getElementById('descricaoInput').value;
+    var quantidade = parseInt(document.getElementById('quantidadeInput').value, 10);
 
-    const quantidade = parseInt(quantidadeInput.value, 10);
-    
     if (tag && descricao && !isNaN(quantidade)) {
         addOrUpdateInstrument(tag, descricao, quantidade);
         
         // Limpar campos de entrada
-        tagInput.value = '';
-        descricaoInput.value = '';
-        quantidadeInput.value = '1';
+        document.getElementById('tagInput').value = '';
+        document.getElementById('descricaoInput').value = '';
+        document.getElementById('quantidadeInput').value = '1';
     } else {
         alert("Por favor, preencha todos os campos com dados válidos!");
     }
