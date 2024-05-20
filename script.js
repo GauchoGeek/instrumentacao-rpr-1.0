@@ -73,13 +73,10 @@ function updateQuantity(tag) {
         }
     }
 }
-
-// Carregar os dados quando a página é inicializada
 document.addEventListener('DOMContentLoaded', function() {
     var instrumentsData = loadDataFromLocalStorage();
     displayInstrumentsList(instrumentsData);
 });
-
 // Adicionar evento de clique para o botão Adicionar
 adicionarButton.addEventListener('click', () => {
     const tag = tagInput.value;
