@@ -1,64 +1,62 @@
+/* styles.css */
+
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  color: #333;
-  margin: 0;
-  padding: 20px;
+    font-family: Arial, sans-serif;
 }
 
-#app {
-  max-width: 600px;
-  margin: 0 auto;
-  background-color: #fff;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.input-area label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
 }
 
-h1 {
-  color: #ff6600;
-  text-align: center;
+.input-area label[for="tag"] {
+    color: red; /* Cor vermelha para o label TAG */
 }
 
-.input-area {
-  margin-bottom: 20px;
+.input-area label[for="descricao"] {
+    color: yellow; /* Cor amarela para o label Descrição */
 }
 
-label {
-  display: block;
-  margin-bottom: 5px;
+.input-area label[for="quantidade"] {
+    color: green; /* Cor verde para o label Quantidade */
 }
 
-input, textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  margin-bottom: 10px;
-}
-
-textarea {
-  height: 100px;
-  resize: vertical;
-}
-
-button {
-  background-color: #ff6600;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #ff8000;
+.instrument-list h2 {
+    color: #333;
+    margin-bottom: 10px;
 }
 
 .instrument-list ul {
-  list-style: none;
-  padding: 0;
+    list-style: none;
+    padding: 0;
 }
 
 .instrument-list li {
-  margin-bottom: 10px;
-  border-bottom: 1px solid #f0f0f0;
-  padding-bottom: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.instrument-list li strong {
+    color: red; /* Cor vermelha para a TAG no item da lista */
+}
+
+.instrument-list li .quantity {
+    color: green; /* Cor verde para a quantidade no item da lista */
+    font-weight: bold;
+}
+
+.remove-btn,
+.update-quantity-btn {
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.remove-btn {
+    color: red;
+}
+
+.update-quantity-btn {
+    color: green;
 }
