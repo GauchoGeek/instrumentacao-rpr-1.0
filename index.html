@@ -20,12 +20,35 @@
             border: none;
             cursor: pointer;
             border-radius: 5px;
+            display: block; /* Ocupa toda a largura disponível */
             margin-bottom: 20px; /* Espaçamento */
         }
-        
+
         #manometrosButton:hover {
             background-color: #218838; /* Verde mais escuro */
         }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button id="manometrosButton" onclick="window.open('https://github.com/SEU_USUARIO/SEU_REPOSITORIO/blob/main/manometros.html', '_blank')">Manômetros</button> 
+
+        <h1>Estoque de Instrumentos</h1>
+
+        <input type="text" id="filterInput" placeholder="Filtrar por descrição" onkeyup="filtrarEstoque()">
+
+        <table id="estoqueTable"></table>
+
+        <h2>Adicionar Item:</h2>
+        <input type="text" id="descricaoInput" placeholder="Descrição">
+        <input type="number" id="quantidadeInput" placeholder="Quantidade" value="1">
+        <textarea id="manutencaoInput" placeholder="Instruções de Manutenção"></textarea>
+        <button onclick="adicionarItem()">Adicionar</button>
+
+        <div id="editModal">
+            </div>
+    </div>
+    <script>
     </style>
 </head>
 <body>
