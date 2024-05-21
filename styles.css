@@ -1,58 +1,17 @@
-body {
-        font-family: Arial, sans-serif;
+/* Estilização básica para a tabela e formulário */
+table {
+    width: 80%;
+    border-collapse: collapse;
 }
 
-#estoque-table {
-        border-collapse: collapse;
-        width: 100%;
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
 }
 
-#estoque-table th, #estoque-table td {
-        border: 1px solid #ddd;
-        padding: 10px;
-        text-align: left;
-}
-
-#estoque-table th {
-        background-color: #f0f0f0;
-}
-
-#estoque-tbody tr {
-        border-bottom: 1px solid #ddd;
-}
-
-#estoque-tbody tr:last-child {
-        border-bottom: none;
-}
-
-#criar-item-modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 1;
-}
-
-#criar-item-modal h2 {
-        margin-top: 0;
-}
-
-#criar-item-form {
-        margin-top: 20px;
-}
-
-#criar-item-btn-modal {
-        background-color: #4CAF50;
-        color: #fff;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-}
-
-#criar-item-btn-modal:hover {
-        background-color: #3e8e41;
+#newItemForm input, #newItemForm textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;
 }
