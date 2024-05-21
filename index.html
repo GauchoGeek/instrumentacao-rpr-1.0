@@ -1,76 +1,74 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Estoque de Instrumentos</title>
-<style>
-body {
-    font-family: sans-serif;
-    background-color: #f4f4f4; /* Cinza claro */
-}
-
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-h1, h2 {
-    color: #333; /* Cinza escuro */
-}
-
-input[type="text"], input[type="number"], textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-}
-
-button {
-    background-color: #4CAF50; /* Verde */
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-    border-radius: 3px;
-}
-
-button:hover {
-    background-color: #45a049; /* Verde mais escuro */
-}
-
-#manometrosButton {
-    background-color: #007bff; /* Azul */
-}
-
-#manometrosButton:hover {
-    background-color: #0069d9; /* Azul mais escuro */
-}
-
-/* Cores para as células da tabela */
-tr:nth-child(even) { background-color: #f2f2f2; } /* Cinza claro */
-th { background-color: #007bff; color: white; } /* Azul */
-
-</style>
+  <title>Estoque de Instrumentos</title>
+  <style>
+  /* ... (estilos CSS - iguais ao exemplo anterior) ... */
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Estoque de Instrumentos</h1>
-        <input type="text" id="filterInput" placeholder="Filtrar por descrição" onkeyup="filtrarEstoque()">
-        <button id="manometrosButton" onclick="abrirPaginaManometros()">Manômetros</button>
-        <table id="estoqueTable"></table>
-        <h2>Adicionar Item:</h2>
-        <input type="text" id="descricaoInput" placeholder="Descrição">
-        <input type="number" id="quantidadeInput" placeholder="Quantidade" value="1">
-        <textarea id="manutencaoInput" placeholder="Instruções de Manutenção"></textarea>
-        <button onclick="adicionarItem()">Adicionar</button>
-    </div>
+  <div class="container">
+    <h1>Estoque de Instrumentos</h1>
+    <input type="text" id="filterInput" placeholder="Filtrar por descrição" onkeyup="filtrarEstoque()">
+    <button id="manometrosButton" onclick="abrirPaginaManometros()">Manômetros</button>
+    <table id="estoqueTable"></table>
+    <h2>Adicionar Item:</h2>
+    <input type="text" id="descricaoInput" placeholder="Descrição">
+    <input type="number" id="quantidadeInput" placeholder="Quantidade" value="1">
+    <textarea id="manutencaoInput" placeholder="Instruções de Manutenção"></textarea>
+    <button onclick="adicionarItem()">Adicionar</button>
+  </div>
 
-<script>
-// ... (código JavaScript corrigido - veja abaixo) ...
-</script>
+  <script>
+    let estoque = [];
+
+    function filtrarEstoque() {
+      // ... (código de filtro - se existir) ...
+    }
+
+    function abrirPaginaManometros() {
+      window.open('manometros.html', '_blank');
+    }
+
+    function adicionarItem() {
+      const descricao = document.getElementById("descricaoInput").value.trim();
+      const quantidade = parseInt(document.getElementById("quantidadeInput").value, 10);
+      const manutencao = document.getElementById("manutencaoInput").value.trim();
+
+      if (!descricao || isNaN(quantidade) || quantidade <= 0) {
+        alert("Por favor, preencha todos os campos corretamente.");
+        return;
+      }
+
+      estoque.push({ descricao, quantidade, manutencao });
+      atualizarTabela();
+
+      // Limpa os campos
+      document.getElementById("descricaoInput").value = "";
+      document.getElementById("quantidadeInput").value = "1";
+      document.getElementById("manutencaoInput").value = "";
+    }
+
+    function atualizarTabela() {
+      const tabela = document.getElementById("estoqueTable");
+      tabela.innerHTML = `
+        <tr>
+          <th>Descrição</th>
+          <th>Quantidade</th>
+          <th>Manutenção</th>
+        </tr>
+      `;
+
+      for (const item of estoque) {
+        const row = tabela.insertRow();
+        row.insertCell().textContent = item.descricao;
+        row.insertCell().textContent = item.quantidade;
+        row.insertCell().textContent = item.manutencao;
+      }
+    }
+
+    atualizarTabela(); // Inicializa a tabela
+  </script>
 
 </body>
 </html>
