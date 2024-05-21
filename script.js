@@ -1,56 +1,52 @@
-let estoque = []; // Inicializa o array de estoque
+let estoque = [];
 
-function filtrarEstoque() {
-    // ... (seu código de filtro existente) ...
-}
+function carregarEstoque() {
+  const estoqueTable = document.getElementById("estoqueTable");
+  estoqueTable.innerHTML = `
+    <tr>
+      <th>Descrição</th>
+      <th>Quantidade</th>
+      <th>Manutenção</th>
+      <th>Ações</th>
+    </tr>
+  `;
 
-function abrirPaginaManometros() {
-    window.open('manometros.html', '_blank'); // Abre o arquivo manometros.html em uma nova aba
+  for (let i = 0; i < estoque.length; i++) {
+    const item = estoque[i];
+    const row = estoqueTable.insertRow();
+    row.insertCell().textContent = item.descricao;
+    row.insertCell().textContent = item.quantidade;
+    row.insertCell().textContent = item.manutencao;
+
+    const acoesCell = row.insertCell();
+    acoesCell.innerHTML = `
+      <button onclick="editarItem(${i})">Editar</button>
+      <button onclick="removerItem(${i})">Remover</button>
+    `;
+  }
 }
 
 function adicionarItem() {
-    const descricao = document.getElementById("descricaoInput").value;
-    const quantidade = parseInt(document.getElementById("quantidadeInput").value, 10); // Converte para número inteiro
-    const manutencao = document.getElementById("manutencaoInput").value;
-
-    if (descricao.trim() === "" || isNaN(quantidade) || quantidade <= 0) {
-        alert("Por favor, preencha todos os campos corretamente.");
-        return;
-    }
-
-    const novoItem = {
-        descricao,
-        quantidade,
-        manutencao
-    };
-
-    estoque.push(novoItem);
-    atualizarTabela();
-
-    // Limpar os campos de entrada
-    document.getElementById("descricaoInput").value = "";
-    document.getElementById("quantidadeInput").value = "1";
-    document.getElementById("manutencaoInput").value = "";
+  // ... (lógica para adicionar item, igual à resposta anterior) ...
+  carregarEstoque(); // Recarrega a tabela após adicionar
 }
 
-function atualizarTabela() {
-    const tabela = document.getElementById("estoqueTable");
-    tabela.innerHTML = `
-        <tr>
-            <th>Descrição</th>
-            <th>Quantidade</th>
-            <th>Manutenção</th>
-            <th>Ações</th>
-        </tr>
-    `;
-
-    estoque.forEach((item, index) => {
-        const novaLinha = tabela.insertRow();
-        novaLinha.insertCell().textContent = item.descricao;
-        novaLinha.insertCell().textContent = item.quantidade;
-        novaLinha.insertCell().textContent = item.manutencao;
-        // ... (seu código para adicionar botões de editar/excluir) ...
-    });
+function editarItem(index) {
+  // ... (lógica para editar item) ...
+  carregarEstoque(); // Recarrega a tabela após editar
 }
 
-atualizarTabela(); // Chama a função para inicializar a tabela vazia
+function removerItem(index) {
+  // ... (lógica para remover item) ...
+  carregarEstoque(); // Recarrega a tabela após remover
+}
+
+function filtrarEstoque() {
+  // ... (lógica para filtrar, igual à resposta anterior) ...
+}
+
+function abrirPaginaManometros() {
+  // ... (lógica para abrir página de manômetros) ...
+}
+
+carregarEstoque(); // Carrega o estoque inicial
