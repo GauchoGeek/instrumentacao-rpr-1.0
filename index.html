@@ -2,27 +2,67 @@
 <html>
 <head>
     <title>Sistema de Estoque - Instrumentação</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Estilos básicos para organização (opcional) */
+        body { font-family: sans-serif; }
+        table { width: 80%; margin: 20px auto; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    </style>
 </head>
 <body>
-    <h1>Controle de Estoque de Instrumentos</h1>
 
-    <div id="newItemForm">
-        <input type="text" id="descInput" placeholder="Descrição do Item">
-        <input type="number" id="quantInput" placeholder="Quantidade">
-        <textarea id="manutInput" placeholder="Opções de Manutenção"></textarea>
-        <button onclick="addItem()">Adicionar Item</button>
-    </div>
+    <h1>Estoque de Instrumentos</h1>
 
     <table id="estoqueTable">
         <tr>
             <th>Descrição</th>
             <th>Quantidade</th>
-            <th>Opções de Manutenção</th>
-            <th>Ações</th> 
+            <th>Manutenção</th>
         </tr>
-    </table>
+        </table>
 
-    <script src="script.js"></script>
+    <h2>Adicionar Item:</h2>
+    <input type="text" id="descricaoInput" placeholder="Descrição">
+    <input type="number" id="quantidadeInput" placeholder="Quantidade" value="1">
+    <textarea id="manutencaoInput" placeholder="Instruções de Manutenção"></textarea>
+    <button onclick="adicionarItem()">Adicionar</button>
+
+    <script>
+        // Carregar dados do localStorage (se houver)
+        let estoque = JSON.parse(localStorage.getItem('estoque')) || [];
+        atualizarTabela(); // Exibir os dados na tabela
+
+        function adicionarItem() {
+            let descricao = document.getElementById("descricaoInput").value;
+            let quantidade = parseInt(document.getElementById("quantidadeInput").value);
+            let manutencao = document.getElementById("manutencaoInput").value;
+
+            estoque.push({ descricao, quantidade, manutencao });
+            atualizarTabela();
+            salvarEstoque();
+
+            // Limpar os campos de entrada
+            document.getElementById("descricaoInput").value = "";
+            document.getElementById("quantidadeInput").value = 1;
+            document.getElementById("manutencaoInput").value = "";
+        }
+
+        function atualizarTabela() {
+            let tabela = document.getElementById("estoqueTable");
+            tabela.innerHTML = `<tr><th>Descrição</th><th>Quantidade</th><th>Manutenção</th></tr>`; 
+
+            for (let item of estoque) {
+                let linha = tabela.insertRow();
+                linha.insertCell().textContent = item.descricao;
+                linha.insertCell().textContent = item.quantidade;
+                linha.insertCell().textContent = item.manutencao;
+            }
+        }
+
+        function salvarEstoque() {
+            localStorage.setItem('estoque', JSON.stringify(estoque));
+        }
+    </script>
+
 </body>
 </html>
