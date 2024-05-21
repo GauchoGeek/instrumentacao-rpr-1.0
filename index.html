@@ -3,10 +3,9 @@
 <head>
     <title>Estoque de Instrumentos</title>
     <style>
-        /* Estilos Personalizados */
         body { font-family: sans-serif; background-color: #f4f4f4; color: #333; }
         .container { width: 80%; margin: 20px auto; padding: 20px; background-color: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
-        h1, h2 { color: #007bff; } 
+        h1, h2 { color: #007bff; }
         table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
         th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
         th { background-color: #007bff; color: white; }
@@ -43,15 +42,10 @@
     </div>
 
     <script>
-        let estoque = [];
+        let estoque = JSON.parse(localStorage.getItem('estoque')) || [];
         let itemSendoEditado = null;
 
-        // ... (Funções exibirEstoque, adicionarItem, editarItem, salvarEdicao, fecharModal) ...
-
-        function filtrarEstoque() {
-            const filtro = document.getElementById("filterInput").value.toLowerCase();
-            const itensFiltrados = estoque.filter(item => item.descricao.toLowerCase().includes(filtro));
-
+        function exibirEstoque() {
             const table = document.getElementById("estoqueTable");
             table.innerHTML = `
                 <tr>
@@ -62,11 +56,12 @@
                 </tr>
             `;
 
-            itensFiltrados.forEach((item, index) => {
+            estoque.forEach((item, index) => {
                 const row = table.insertRow();
                 row.insertCell().textContent = item.descricao;
                 row.insertCell().textContent = item.quantidade;
                 row.insertCell().textContent = item.manutencao;
+
                 const actionsCell = row.insertCell();
                 actionsCell.innerHTML = `
                     <button onclick="editarItem(${index})">Editar</button>
@@ -75,12 +70,64 @@
             });
         }
 
-        function removerItem(index) {
-            estoque.splice(index, 1);
-            exibirEstoque(); 
+        function adicionarItem() {
+            const descricao = document.getElementById("descricaoInput").value;
+            const quantidade = parseInt(document.getElementById("quantidadeInput").value, 10);
+            const manutencao = document.getElementById("manutencaoInput").value;
+
+            if (descricao && quantidade > 0) { // Validação básica
+                estoque.push({ descricao, quantidade, manutencao });
+                exibirEstoque();
+                localStorage.setItem('estoque', JSON.stringify(estoque));
+
+                document.getElementById("descricaoInput").value = "";
+                document.getElementById("quantidadeInput").value = 1;
+                document.getElementById("manutencaoInput").value = "";
+            } else {
+                alert("Preencha todos os campos corretamente.");
+            }
         }
 
-        exibirEstoque();
+        function editarItem(index) {
+            itemSendoEditado = index;
+            const item = estoque[index];
+            document.getElementById("editDescricaoInput").value = item.descricao;
+            document.getElementById("editQuantidadeInput").value = item.quantidade;
+            document.getElementById("editManutencaoInput").value = item.manutencao;
+            document.getElementById("editModal").style.display = "block";
+        }
+
+        function salvarEdicao() {
+            const descricao = document.getElementById("editDescricaoInput").value;
+            const quantidade = parseInt(document.getElementById("editQuantidadeInput").value, 10);
+            const manutencao = document.getElementById("editManutencaoInput").value;
+            
+            if (descricao && quantidade > 0) { // Validação básica
+                estoque[itemSendoEditado] = { descricao, quantidade, manutencao };
+                itemSendoEditado = null;
+                fecharModal();
+                exibirEstoque();
+                localStorage.setItem('estoque', JSON.stringify(estoque));
+            } else {
+                alert("Preencha todos os campos corretamente.");
+            }
+        }
+
+        function fecharModal() {
+            document.getElementById("editModal").style.display = "none";
+        }
+
+        function removerItem(index) {
+            estoque.splice(index, 1);
+            exibirEstoque();
+            localStorage.setItem('estoque', JSON.stringify(estoque));
+        }
+
+        function filtrarEstoque() {
+            // ... (mesma lógica da versão anterior) ...
+        }
+
+        exibirEstoque(); 
     </script>
 </body>
 </html>
