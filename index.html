@@ -5,9 +5,8 @@
     <style> /* (Estilos CSS - Sem alterações) */ </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container"> 
         <h1>Estoque de Instrumentos</h1>
-
         <div class="filter-container">
             <input type="text" id="filterInput" placeholder="Filtrar por descrição">
         </div>
@@ -65,29 +64,22 @@
         }
 
         function adicionarItem() {
-            // ... (Lógica para adicionar item ao estoque - semelhante ao anterior)
+            const descricao = document.getElementById("descricaoInput").value;
+            const quantidade = parseInt(document.getElementById("quantidadeInput").value, 10);
+            const manutencao = document.getElementById("manutencaoInput").value;
+
+            estoque.push({ descricao, quantidade, manutencao });
+
+            // **Chamar exibirEstoque() após adicionar o item:**
+            exibirEstoque();
+
+            // Limpar os campos de entrada:
+            document.getElementById("descricaoInput").value = "";
+            document.getElementById("quantidadeInput").value = 1;
+            document.getElementById("manutencaoInput").value = "";
         }
 
-        function editarItem(index) {
-            // ... (Lógica para preencher o modal com os dados do item e exibir o modal)
-        }
-
-        function salvarEdicao() {
-            // ... (Lógica para salvar as alterações do item no estoque)
-        }
-
-        function fecharModal() {
-            // ... (Lógica para fechar o modal)
-        }
-
-        function removerItem(index) {
-            // ... (Lógica para remover o item do estoque)
-        }
-
-        const filterInput = document.getElementById("filterInput");
-        filterInput.addEventListener("input", () => {
-            // ... (Lógica para filtrar a tabela com base no input)
-        });
+        // ... (Outras funções - editarItem, salvarEdicao, fecharModal, removerItem, filtro) ...
 
         exibirEstoque(); // Exibir o estoque inicial (vazio)
     </script>
