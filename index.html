@@ -2,12 +2,24 @@
 <html>
 <head>
     <title>Sistema de Estoque - Instrumentação</title>
-    <style> /* Estilos básicos (opcional) */ </style>
+    <style>
+        /* Estilos básicos para organização (opcional) */
+        body { font-family: sans-serif; }
+        table { width: 80%; margin: 20px auto; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    </style>
 </head>
 <body>
 
     <h1>Estoque de Instrumentos</h1>
-    <table id="estoqueTable"></table>
+
+    <table id="estoqueTable">
+        <tr>
+            <th>Descrição</th>
+            <th>Quantidade</th>
+            <th>Manutenção</th>
+        </tr>
+        </table>
 
     <h2>Adicionar Item:</h2>
     <input type="text" id="descricaoInput" placeholder="Descrição">
@@ -16,47 +28,40 @@
     <button onclick="adicionarItem()">Adicionar</button>
 
     <script>
-        // ... (código para carregar e salvar dados no localStorage)
+        // Carregar dados do localStorage (se houver)
+        let estoque = JSON.parse(localStorage.getItem('estoque')) || [];
+        atualizarTabela(); // Exibir os dados na tabela
 
-        function adicionarItem() { /* ... (código para adicionar item) */ }
-        function salvarEstoque() { /* ... (código para salvar no localStorage) */ }
+        function adicionarItem() {
+            let descricao = document.getElementById("descricaoInput").value;
+            let quantidade = parseInt(document.getElementById("quantidadeInput").value);
+            let manutencao = document.getElementById("manutencaoInput").value;
+
+            estoque.push({ descricao, quantidade, manutencao });
+            atualizarTabela();
+            salvarEstoque();
+
+            // Limpar os campos de entrada
+            document.getElementById("descricaoInput").value = "";
+            document.getElementById("quantidadeInput").value = 1;
+            document.getElementById("manutencaoInput").value = "";
+        }
 
         function atualizarTabela() {
             let tabela = document.getElementById("estoqueTable");
-            tabela.innerHTML = `<tr><th>Descrição</th><th>Quantidade</th><th>Manutenção</th><th>Ações</th></tr>`;
+            tabela.innerHTML = `<tr><th>Descrição</th><th>Quantidade</th><th>Manutenção</th></tr>`; 
 
-            for (let i = 0; i < estoque.length; i++) {
+            for (let item of estoque) {
                 let linha = tabela.insertRow();
-                linha.insertCell().textContent = estoque[i].descricao;
-                linha.insertCell().textContent = estoque[i].quantidade;
-                linha.insertCell().textContent = estoque[i].manutencao;
-
-                let acoesCell = linha.insertCell();
-                let removerBtn = document.createElement("button");
-                removerBtn.textContent = "Remover";
-                removerBtn.onclick = function() { removerItem(i); };
-                acoesCell.appendChild(removerBtn);
-
-                let atualizarBtn = document.createElement("button");
-                atualizarBtn.textContent = "Atualizar";
-                atualizarBtn.onclick = function() { atualizarItem(i); };
-                acoesCell.appendChild(atualizarBtn);
+                linha.insertCell().textContent = item.descricao;
+                linha.insertCell().textContent = item.quantidade;
+                linha.insertCell().textContent = item.manutencao;
             }
         }
 
-        function removerItem(index) {
-            estoque.splice(index, 1); // Remove o item do array
-            atualizarTabela();
-            salvarEstoque();
+        function salvarEstoque() {
+            localStorage.setItem('estoque', JSON.stringify(estoque));
         }
-
-        function atualizarItem(index) {
-            // Lógica para exibir um formulário de edição (não implementado aqui)
-            // ...
-            // Após a edição, atualizar o array `estoque` e chamar `atualizarTabela()` e `salvarEstoque()`
-        }
-
-        // ... (chamada inicial para carregar e exibir os dados)
     </script>
 
 </body>
