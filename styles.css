@@ -1,17 +1,68 @@
-/* Estilização básica para a tabela e formulário */
-table {
-    width: 80%;
-    border-collapse: collapse;
-}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sistema de Estoque - Instrumentação</title>
+    <style>
+        body { 
+            font-family: sans-serif; 
+            background-color: #F2F2F2; /* Amarelo claro de fundo */
+        }
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
+        h1, h2 {
+            color: #006400; /* Verde escuro para títulos */
+        }
 
-#newItemForm input, #newItemForm textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    box-sizing: border-box;
-}
+        #estoqueTable { 
+            width: 80%; 
+            margin: 20px auto; 
+            border-collapse: collapse;
+        }
+
+        th, td { 
+            border: 1px solid #ddd; 
+            padding: 10px; 
+            text-align: left;
+        }
+
+        th { 
+            background-color: #FFFF00; /* Amarelo vivo para cabeçalho */
+            color: #006400; /* Verde escuro para texto do cabeçalho */
+        }
+
+        .actions button {
+            background-color: #DC143C; /* Vermelho para botões */
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            margin: 2px;
+            cursor: pointer;
+        }
+
+        .filter-container {
+            text-align: center; 
+            margin-bottom: 10px;
+        }
+
+        input[type="text"], input[type="number"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+
+        #editModal { 
+            /* ... (estilos do modal) */ 
+            border: 2px solid #DC143C; /* Borda vermelha no modal */
+        }
+
+        /* Estilos para realçar a linha selecionada */
+        .selected-row {
+            background-color: #FFFACD; /* Amarelo claro para a linha selecionada */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Estoque de Instrumentos</h1>
+    </body>
+</html>
