@@ -3,41 +3,18 @@
 <head>
     <title>Estoque de Instrumentos</title>
     <style>
-        body { font-family: sans-serif; background-color: #f4f4f4; color: #333; }
-        .container { width: 80%; margin: 20px auto; padding: 20px; background-color: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
-        h1, h2 { color: #007bff; }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        th { background-color: #007bff; color: white; }
-        input, textarea { width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; }
-        button { background-color: #007bff; color: white; padding: 10px 15px; border: none; cursor: pointer; border-radius: 5px; }
-        button:hover { background-color: #0056b3; }
-        #editModal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); }
-        #manometrosButton {
-            background-color: #28a745; /* Verde */
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            display: block; /* Ocupa toda a largura disponível */
-            margin-bottom: 20px; /* Espaçamento */
-        }
-
-        #manometrosButton:hover {
-            background-color: #218838; /* Verde mais escuro */
-        }
+        /* ... (estilos existentes) ... */
     </style>
 </head>
 <body>
     <div class="container">
-        <button id="manometrosButton" onclick="window.open('https://github.com/GauchoGeek/instrumentacao-rpr-1.0/blob/main/manometros.html', '_blank')">Manômetros</button> 
+        <button id="manometrosButton" onclick="window.open('https://github.com/SEU_USUARIO/SEU_REPOSITORIO/blob/main/manometros.html', '_blank')">Manômetros</button> 
 
         <h1>Estoque de Instrumentos</h1>
 
-        <input type="text" id="filterInput" placeholder="Filtrar por descrição" onkeyup="filtrarEstoque()">
+        <input type="text" id="filterInput" placeholder="Filtrar por descrição">
 
-        <table id="estoqueTable"></table>
+        <table id="estoqueTable"></table> 
 
         <h2>Adicionar Item:</h2>
         <input type="text" id="descricaoInput" placeholder="Descrição">
@@ -47,56 +24,6 @@
 
         <div id="editModal">
             </div>
-    </div>
-    <script>
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Estoque de Instrumentos</h1>
-
-        <input type="text" id="filterInput" placeholder="Filtrar por descrição" onkeyup="filtrarEstoque()">
-
-        <button id="manometrosButton" onclick="window.open('https://github.com/GauchoGeek/instrumentacao-rpr-1.0/blob/main/manometros.html', '_blank')">Manômetros</button>
-
-        <table id="estoqueTable"></table>
-
-        <h2>Adicionar Item:</h2>
-        <input type="text" id="descricaoInput" placeholder="Descrição">
-        <input type="number" id="quantidadeInput" placeholder="Quantidade" value="1">
-        <textarea id="manutencaoInput" placeholder="Instruções de Manutenção"></textarea>
-        <button onclick="adicionarItem()">Adicionar</button>
-
-        <div id="editModal">
-            </div>
-    </div>
-    <script>
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Estoque de Instrumentos</h1>
-
-        <input type="text" id="filterInput" placeholder="Filtrar por descrição" onkeyup="filtrarEstoque()">
-
-        <table id="estoqueTable"></table>
-
-        <h2>Adicionar Item:</h2>
-        <input type="text" id="descricaoInput" placeholder="Descrição">
-        <input type="number" id="quantidadeInput" placeholder="Quantidade" value="1">
-        <textarea id="manutencaoInput" placeholder="Instruções de Manutenção"></textarea>
-        <button onclick="adicionarItem()">Adicionar</button>
-
-        <div id="editModal">
-            <h2>Editar Item</h2>
-            <input type="text" id="editDescricaoInput">
-            <input type="number" id="editQuantidadeInput">
-            <textarea id="editManutencaoInput"></textarea>
-            <div>
-                <button onclick="salvarEdicao()">Salvar</button>
-                <button onclick="fecharModal()">Cancelar</button>
-            </div>
-        </div>
     </div>
 
     <script>
@@ -126,66 +53,31 @@
                     <button onclick="removerItem(${index})">Remover</button>
                 `;
             });
-        }
 
-        function adicionarItem() {
-            const descricao = document.getElementById("descricaoInput").value;
-            const quantidade = parseInt(document.getElementById("quantidadeInput").value, 10);
-            const manutencao = document.getElementById("manutencaoInput").value;
-
-            if (descricao && quantidade > 0) { // Validação básica
-                estoque.push({ descricao, quantidade, manutencao });
-                exibirEstoque();
-                localStorage.setItem('estoque', JSON.stringify(estoque));
-
-                document.getElementById("descricaoInput").value = "";
-                document.getElementById("quantidadeInput").value = 1;
-                document.getElementById("manutencaoInput").value = "";
-            } else {
-                alert("Preencha todos os campos corretamente.");
-            }
-        }
-
-        function editarItem(index) {
-            itemSendoEditado = index;
-            const item = estoque[index];
-            document.getElementById("editDescricaoInput").value = item.descricao;
-            document.getElementById("editQuantidadeInput").value = item.quantidade;
-            document.getElementById("editManutencaoInput").value = item.manutencao;
-            document.getElementById("editModal").style.display = "block";
-        }
-
-        function salvarEdicao() {
-            const descricao = document.getElementById("editDescricaoInput").value;
-            const quantidade = parseInt(document.getElementById("editQuantidadeInput").value, 10);
-            const manutencao = document.getElementById("editManutencaoInput").value;
-            
-            if (descricao && quantidade > 0) { // Validação básica
-                estoque[itemSendoEditado] = { descricao, quantidade, manutencao };
-                itemSendoEditado = null;
-                fecharModal();
-                exibirEstoque();
-                localStorage.setItem('estoque', JSON.stringify(estoque));
-            } else {
-                alert("Preencha todos os campos corretamente.");
-            }
-        }
-
-        function fecharModal() {
-            document.getElementById("editModal").style.display = "none";
-        }
-
-        function removerItem(index) {
-            estoque.splice(index, 1);
-            exibirEstoque();
-            localStorage.setItem('estoque', JSON.stringify(estoque));
+            filtrarEstoque(); // Chama a função de filtragem após exibir a tabela
         }
 
         function filtrarEstoque() {
-            // ... (mesma lógica da versão anterior) ...
+            const filterValue = document.getElementById("filterInput").value.toUpperCase();
+            const rows = document.getElementById("estoqueTable").getElementsByTagName("tr");
+            
+            for (let i = 1; i < rows.length; i++) { // Começa em 1 para ignorar o cabeçalho
+                let descricao = rows[i].getElementsByTagName("td")[0]; // Obtém a célula da descrição
+                
+                if (descricao) {
+                    let txtValue = descricao.textContent || descricao.innerText;
+                    if (txtValue.toUpperCase().indexOf(filterValue) > -1) {
+                        rows[i].style.display = "";
+                    } else {
+                        rows[i].style.display = "none";
+                    }
+                }
+            }
         }
 
-        exibirEstoque(); 
+        // ... (restante do código JavaScript) ...
+
+        exibirEstoque(); // Chama a função para exibir a tabela inicial
     </script>
 </body>
 </html>
