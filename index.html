@@ -1,48 +1,76 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Estoque de Instrumentos</title>
-    <style>
-        /* ... (estilos existentes) ... */
+<title>Estoque de Instrumentos</title>
+<style>
+body {
+    font-family: sans-serif;
+    background-color: #f4f4f4; /* Cinza claro */
+}
 
-        /* Estilo para o botão Manômetros */
-        #manometrosButton {
-            background-color: #28a745; /* Verde */
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-bottom: 20px; /* Espaçamento */
-        }
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
 
-        #manometrosButton:hover {
-            background-color: #218838; /* Verde mais escuro */
-        }
-    </style>
+h1, h2 {
+    color: #333; /* Cinza escuro */
+}
+
+input[type="text"], input[type="number"], textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
+button {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+button:hover {
+    background-color: #45a049; /* Verde mais escuro */
+}
+
+#manometrosButton {
+    background-color: #007bff; /* Azul */
+}
+
+#manometrosButton:hover {
+    background-color: #0069d9; /* Azul mais escuro */
+}
+
+/* Cores para as células da tabela */
+tr:nth-child(even) { background-color: #f2f2f2; } /* Cinza claro */
+th { background-color: #007bff; color: white; } /* Azul */
+
+</style>
 </head>
 <body>
     <div class="container">
         <h1>Estoque de Instrumentos</h1>
-
         <input type="text" id="filterInput" placeholder="Filtrar por descrição" onkeyup="filtrarEstoque()">
-
-        <button id="manometrosButton" onclick="window.open('https://github.com/SEU_USUARIO/SEU_REPOSITORIO/blob/main/manometros.html', '_blank')">Manômetros</button>
-
+        <button id="manometrosButton" onclick="abrirPaginaManometros()">Manômetros</button>
         <table id="estoqueTable"></table>
-
         <h2>Adicionar Item:</h2>
         <input type="text" id="descricaoInput" placeholder="Descrição">
         <input type="number" id="quantidadeInput" placeholder="Quantidade" value="1">
         <textarea id="manutencaoInput" placeholder="Instruções de Manutenção"></textarea>
         <button onclick="adicionarItem()">Adicionar</button>
-
-        <div id="editModal">
-            </div>
     </div>
 
-    <script>
-        // ... (código JavaScript existente) ...
-    </script>
+<script>
+// ... (código JavaScript corrigido - veja abaixo) ...
+</script>
+
 </body>
 </html>
