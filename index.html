@@ -1,36 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-        <title>Esteque</title>
-        <link rel="stylesheet" href="style.css">
+    <title>Sistema de Estoque - Instrumentação</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-        <h1>Esteque</h1>
-        <table id="estoque-table">
-                <thead>
-                        <tr>
-                                <th>Tag</th>
-                                <th>Quantidade</th>
-                                <th>Descrição</th>
-                                <th>Ações</th>
-                        </tr>
-                </thead>
-                <tbody id="estoque-tbody">
-                </tbody>
-        </table>
-        <button id="criar-item-btn">Criar Item</button>
-        <div id="criar-item-modal">
-                <h2>Criar Item</h2>
-                <form id="criar-item-form">
-                        <label for="tag">Tag:</label>
-                        <input type="text" id="tag" name="tag"><br><br>
-                        <label for="quantidade">Quantidade:</label>
-                        <input type="number" id="quantidade" name="quantidade"><br><br>
-                        <label for="descricao">Descrição:</label>
-                        <textarea id="descricao" name="descricao"></textarea><br><br>
-                        <button id="criar-item-btn-modal">Criar</button>
-                </form>
-        </div>
-        <script src="script.js"></script>
+    <h1>Controle de Estoque de Instrumentos</h1>
+
+    <div id="newItemForm">
+        <input type="text" id="descInput" placeholder="Descrição do Item">
+        <input type="number" id="quantInput" placeholder="Quantidade">
+        <textarea id="manutInput" placeholder="Opções de Manutenção"></textarea>
+        <button onclick="addItem()">Adicionar Item</button>
+    </div>
+
+    <table id="estoqueTable">
+        <tr>
+            <th>Descrição</th>
+            <th>Quantidade</th>
+            <th>Opções de Manutenção</th>
+        </tr>
+    </table>
+
+    <script src="script.js"></script>
 </body>
 </html>
