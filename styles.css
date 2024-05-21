@@ -2,66 +2,47 @@
 <html>
 <head>
     <title>Sistema de Estoque - Instrumentação</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { 
-            font-family: sans-serif; 
-            background-color: #F2F2F2; /* Amarelo claro de fundo */
-        }
-
-        h1, h2 {
-            color: #006400; /* Verde escuro para títulos */
-        }
-
-        #estoqueTable { 
-            width: 80%; 
-            margin: 20px auto; 
-            border-collapse: collapse;
-        }
-
-        th, td { 
-            border: 1px solid #ddd; 
-            padding: 10px; 
-            text-align: left;
-        }
-
-        th { 
-            background-color: #FFFF00; /* Amarelo vivo para cabeçalho */
-            color: #006400; /* Verde escuro para texto do cabeçalho */
-        }
-
+        /* ... (estilos anteriores) ... */
+        
+        /* Ícones nos botões */
         .actions button {
-            background-color: #DC143C; /* Vermelho para botões */
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            margin: 2px;
-            cursor: pointer;
+            /* ... (estilos anteriores dos botões) ... */
         }
 
-        .filter-container {
-            text-align: center; 
-            margin-bottom: 10px;
+        .actions button:nth-child(1)::before { /* Ícone de lixeira no 1º botão */
+            content: "\f2ed"; /* Código do ícone de lixeira no Font Awesome */
+            margin-right: 5px;
         }
 
-        input[type="text"], input[type="number"], textarea {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0;
-            box-sizing: border-box;
+        .actions button:nth-child(2)::before { /* Ícone de lápis no 2º botão */
+            content: "\f044"; /* Código do ícone de lápis no Font Awesome */
+            margin-right: 5px;
         }
 
-        #editModal { 
-            /* ... (estilos do modal) */ 
-            border: 2px solid #DC143C; /* Borda vermelha no modal */
+        /* Hover nos botões */
+        .actions button:hover {
+            opacity: 0.8;
         }
 
-        /* Estilos para realçar a linha selecionada */
-        .selected-row {
-            background-color: #FFFACD; /* Amarelo claro para a linha selecionada */
+        /* Hover nas linhas da tabela */
+        #estoqueTable tr:hover {
+            background-color: #f5f5f5; /* Cinza claro no hover */
+        }
+
+        /* Responsividade básica */
+        @media (max-width: 768px) { 
+            #estoqueTable {
+                width: 95%;
+            }
+
+            .actions button {
+                padding: 5px 7px; /* Reduzir o padding dos botões */
+            }
         }
     </style>
 </head>
-
 <body>
     <h1>Estoque de Instrumentos</h1>
     </body>
