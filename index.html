@@ -3,78 +3,7 @@
 <head>
   <title>Estoque de Instrumentos</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f0f0f0; /* Cinza claro */
-      margin: 0;
-    }
-
-    .container {
-      max-width: 960px;
-      margin: 20px auto;
-      padding: 30px;
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    h1 {
-      color: #d9534f; /* Vermelho */
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    input, textarea {
-      width: calc(100% - 22px);
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-
-    button {
-      background-color: #5cb85c; /* Verde */
-      color: white;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    button:hover {
-      background-color: #4cae4c;
-    }
-
-    #manometrosButton {
-      background-color: #f0ad4e; /* Amarelo */
-    }
-
-    #manometrosButton:hover {
-      background-color: #eea236;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-
-    th, td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
-
-    th {
-      background-color: #d9534f; /* Vermelho */
-      color: white;
-    }
-
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
+    /* ... (mesmo CSS da resposta anterior) ... */
   </style>
 </head>
 <body>
@@ -86,17 +15,93 @@
       <button id="manometrosButton" onclick="abrirPaginaManometros()">Manômetros</button>
     </div>
 
-    <table id="estoqueTable"></table>
+    <table id="estoqueTable">
+      <thead>
+        <tr>
+          <th>Descrição</th>
+          <th>Quantidade</th>
+          <th>Instruções de Manutenção</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="estoqueTableBody"></tbody>
+    </table>
 
     <h2>Adicionar Item:</h2>
-    <input type="text" id="descricaoInput" placeholder="Descrição">
-    <input type="number" id="quantidadeInput" placeholder="Quantidade" value="1">
-    <textarea id="manutencaoInput" placeholder="Instruções de Manutenção"></textarea>
-    <button onclick="adicionarItem()">Adicionar</button>
-  </div>
+    <form id="addItemForm">
+      <input type="text" id="descricaoInput" placeholder="Descrição">
+      <input type="number" id="quantidadeInput" placeholder="Quantidade" value="1">
+      <textarea id="manutencaoInput" placeholder="Instruções de Manutenção"></textarea>
+      <button type="submit" onclick="adicionarItem()">Adicionar</button>
+    </form>
 
-  <script>
-    // ... (mesmo JavaScript da resposta anterior) ...
-  </script>
+    <script>
+      let estoque = [];
+
+      function adicionarItem() {
+        const descricao = document.getElementById("descricaoInput").value;
+        const quantidade = document.getElementById("quantidadeInput").value;
+        const manutencao = document.getElementById("manutencaoInput").value;
+
+        estoque.push({ descricao, quantidade, manutencao });
+        atualizarTabela();
+
+        document.getElementById("addItemForm").reset();
+      }
+
+      function atualizarTabela() {
+        const tableBody = document.getElementById("estoqueTableBody");
+        tableBody.innerHTML = "";
+
+        estoque.forEach((item, index) => {
+          const row = tableBody.insertRow();
+          row.innerHTML = `
+            <td>${item.descricao}</td>
+            <td>${item.quantidade}</td>
+            <td>${item.manutencao}</td>
+            <td>
+              <button onclick="editarItem(${index})">Editar</button>
+              <button onclick="removerItem(${index})">Remover</button>
+            </td>
+          `;
+        });
+      }
+
+      function editarItem(index) {
+        const item = estoque[index];
+        document.getElementById("descricaoInput").value = item.descricao;
+        document.getElementById("quantidadeInput").value = item.quantidade;
+        document.getElementById("manutencaoInput").value = item.manutencao;
+      }
+
+      function removerItem(index) {
+        estoque.splice(index, 1);
+        atualizarTabela();
+      }
+
+      function filtrarEstoque() {
+        const filterInput = document.getElementById("filterInput").value;
+        const tableRows = document.getElementById("estoqueTableBody").rows;
+
+        for (let i = 0; i < tableRows.length; i++) {
+          const row = tableRows[i];
+          const descricaoCell = row.cells[0];
+          const descricao = descricaoCell.textContent;
+
+          if (descricao.toLowerCase().includes(filterInput.toLowerCase())) {
+            row.style.display = "";
+          } else {
+            row.style.display = "none";
+          }
+        }
+      }
+
+      function abrirPaginaManometros() {
+        // ... (funcionalidade para abrir página de manômetros) ...
+      }
+
+      atualizarTabela();
+    </script>
+  </div>
 </body>
 </html>
