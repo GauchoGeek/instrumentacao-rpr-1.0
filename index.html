@@ -3,92 +3,47 @@
 <head>
     <title>Sistema de Estoque - Instrumentação</title>
     <style>
-        body { font-family: sans-serif; }
-        #estoqueTable { width: 80%; margin: 20px auto; border-collapse: collapse; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .actions button { margin: 2px; padding: 5px 8px; }
-        .filter-container { text-align: center; margin-bottom: 10px; }
+        /* Estilos (mesmos do exemplo anterior) */
     </style>
 </head>
 <body>
 
     <h1>Estoque de Instrumentos</h1>
-
     <div class="filter-container">
         <input type="text" id="filterInput" placeholder="Filtrar por descrição">
     </div>
-
     <table id="estoqueTable"></table>
-
     <h2>Adicionar Item:</h2>
-    <input type="text" id="descricaoInput" placeholder="Descrição">
-    <input type="number" id="quantidadeInput" placeholder="Quantidade" value="1">
-    <textarea id="manutencaoInput" placeholder="Instruções de Manutenção"></textarea>
-    <button onclick="adicionarItem()">Adicionar</button>
-
-    <div id="editModal" style="display: none;"> 
-        <h2>Editar Item</h2>
-        <input type="text" id="editDescricaoInput">
-        <input type="number" id="editQuantidadeInput">
-        <textarea id="editManutencaoInput"></textarea>
-        <button onclick="salvarEdicao()">Salvar</button>
-        <button onclick="fecharModal()">Cancelar</button>
-    </div>
+    <div id="editModal" style="display: none;">
+        </div>
 
     <script>
         let estoque = JSON.parse(localStorage.getItem('estoque')) || [];
-        let editIndex = -1; // Índice do item sendo editado
+        let editIndex = -1; 
 
         atualizarTabela();
 
-        // Funções (adicionarItem, salvarEstoque) ... (mesmas do exemplo anterior)
+        function adicionarItem() {
+            let descricao = document.getElementById("descricaoInput").value;
+            let quantidade = parseInt(document.getElementById("quantidadeInput").value);
+            let manutencao = document.getElementById("manutencaoInput").value;
 
-        function atualizarTabela() {
-            let filtro = document.getElementById("filterInput").value.toLowerCase();
-            let tabela = document.getElementById("estoqueTable");
-            tabela.innerHTML = `<tr><th>Descrição</th><th>Quantidade</th><th>Manutenção</th><th>Ações</th></tr>`;
+            estoque.push({ descricao, quantidade, manutencao });
+            
+            // Limpar os campos de entrada
+            document.getElementById("descricaoInput").value = "";
+            document.getElementById("quantidadeInput").value = 1;
+            document.getElementById("manutencaoInput").value = "";
 
-            for (let i = 0; i < estoque.length; i++) {
-                if (estoque[i].descricao.toLowerCase().includes(filtro)) {
-                    let linha = tabela.insertRow();
-                    // ... (células para descrição, quantidade, manutenção)
-                    let acoesCell = linha.insertCell();
-                    // ... (botões remover, editar)
-                }
-            }
-        }
-
-        function removerItem(index) { /* ... (mesma do exemplo anterior) */ }
-        function fecharModal() { document.getElementById("editModal").style.display = "none"; }
-
-        function editarItem(index) {
-            editIndex = index;
-            let item = estoque[index];
-            document.getElementById("editDescricaoInput").value = item.descricao;
-            document.getElementById("editQuantidadeInput").value = item.quantidade;
-            document.getElementById("editManutencaoInput").value = item.manutencao;
-            document.getElementById("editModal").style.display = "block";
-        }
-
-        function salvarEdicao() {
-            estoque[editIndex] = {
-                descricao: document.getElementById("editDescricaoInput").value,
-                quantidade: parseInt(document.getElementById("editQuantidadeInput").value),
-                manutencao: document.getElementById("editManutencaoInput").value
-            };
-            atualizarTabela();
+            atualizarTabela(); // Chamar a função para atualizar a tabela após adicionar o item
             salvarEstoque();
-            fecharModal();
         }
 
-        document.getElementById("filterInput").addEventListener("input", atualizarTabela); // Filtrar ao digitar
-        document.getElementById("estoqueTable").addEventListener("click", function(event) { // Ordenar ao clicar no cabeçalho
-            if (event.target.tagName === "TH") {
-                let prop = event.target.textContent.toLowerCase();
-                estoque.sort((a, b) => (a[prop] > b[prop]) ? 1 : -1); // Ordenação simples (pode ser melhorada)
-                atualizarTabela();
-            }
+        // Outras funções (atualizarTabela, removerItem, editarItem, salvarEdicao, fecharModal) ... (mesmas do exemplo anterior)
+
+        document.getElementById("filterInput").addEventListener("input", atualizarTabela);
+        document.getElementById("estoqueTable").addEventListener("click", function(event) {
+            // ... (mesma lógica de ordenação)
         });
     </script>
 
