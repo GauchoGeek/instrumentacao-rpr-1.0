@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Sistema de Estoque - Instrumentação</title>
+    <title>Estoque de Instrumentos</title>
     <style>
-        /* Estilos CSS (Aprimorados para melhor apresentação) */
-        body { font-family: sans-serif; }
-        .container { width: 80%; margin: 0 auto; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        input, textarea, button { padding: 8px; margin: 5px 0; }
-        #editModal { display: none; /* Modal inicialmente oculto */ position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border: 1px solid #ddd; }
+        /* Estilos Personalizados */
+        body { font-family: sans-serif; background-color: #f4f4f4; color: #333; }
+        .container { width: 80%; margin: 20px auto; padding: 20px; background-color: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
+        h1, h2 { color: #007bff; } 
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #007bff; color: white; }
+        input, textarea { width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; }
+        button { background-color: #007bff; color: white; padding: 10px 15px; border: none; cursor: pointer; border-radius: 5px; }
+        button:hover { background-color: #0056b3; }
+        #editModal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); } 
     </style>
 </head>
 <body>
@@ -40,67 +44,41 @@
 
     <script>
         let estoque = [];
-        let itemSendoEditado = null; // Índice do item sendo editado
+        let itemSendoEditado = null;
 
-        function exibirEstoque() { /* ... (Função exibirEstoque sem alterações) ... */ }
+        // ... (Funções exibirEstoque, adicionarItem, editarItem, salvarEdicao, fecharModal) ...
 
-        function adicionarItem() { /* ... (Função adicionarItem sem alterações) ... */ }
+        function filtrarEstoque() {
+            const filtro = document.getElementById("filterInput").value.toLowerCase();
+            const itensFiltrados = estoque.filter(item => item.descricao.toLowerCase().includes(filtro));
 
-        function editarItem(index) {
-            itemSendoEditado = index;
-            const item = estoque[index];
-            document.getElementById("editDescricaoInput").value = item.descricao;
-            document.getElementById("editQuantidadeInput").value = item.quantidade;
-            document.getElementById("editManutencaoInput").value = item.manutencao;
-            document.getElementById("editModal").style.display = "block";
-        }
+            const table = document.getElementById("estoqueTable");
+            table.innerHTML = `
+                <tr>
+                    <th>Descrição</th>
+                    <th>Quantidade</th>
+                    <th>Manutenção</th>
+                    <th>Ações</th>
+                </tr>
+            `;
 
-        function salvarEdicao() {
-            const descricao = document.getElementById("editDescricaoInput").value;
-            const quantidade = document.getElementById("editQuantidadeInput").value;
-            const manutencao = document.getElementById("editManutencaoInput").value;
-            estoque[itemSendoEditado] = { descricao, quantidade, manutencao };
-            itemSendoEditado = null;
-            fecharModal();
-            exibirEstoque();
-        }
-
-        function fecharModal() {
-            document.getElementById("editModal").style.display = "none";
+            itensFiltrados.forEach((item, index) => {
+                const row = table.insertRow();
+                row.insertCell().textContent = item.descricao;
+                row.insertCell().textContent = item.quantidade;
+                row.insertCell().textContent = item.manutencao;
+                const actionsCell = row.insertCell();
+                actionsCell.innerHTML = `
+                    <button onclick="editarItem(${index})">Editar</button>
+                    <button onclick="removerItem(${index})">Remover</button>
+                `;
+            });
         }
 
         function removerItem(index) {
             estoque.splice(index, 1);
-            exibirEstoque();
+            exibirEstoque(); 
         }
-
-   function filtrarEstoque() {
-    const filtro = document.getElementById("filterInput").value.toLowerCase();
-    const itensFiltrados = estoque.filter(item => item.descricao.toLowerCase().includes(filtro));
-
-    const table = document.getElementById("estoqueTable");
-    table.innerHTML = `
-        <tr>
-            <th>Descrição</th>
-            <th>Quantidade</th>
-            <th>Manutenção</th>
-            <th>Ações</th>
-        </tr>
-    `; 
-
-    itensFiltrados.forEach((item, index) => {
-        const row = table.insertRow();
-        row.insertCell().textContent = item.descricao;
-        row.insertCell().textContent = item.quantidade;
-        row.insertCell().textContent = item.manutencao;
-
-        const actionsCell = row.insertCell();
-        actionsCell.innerHTML = `
-            <button onclick="editarItem(${index})">Editar</button>
-            <button onclick="removerItem(${index})">Remover</button>
-        `;
-    });
-}
 
         exibirEstoque();
     </script>
