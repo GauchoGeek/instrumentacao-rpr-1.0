@@ -74,18 +74,33 @@
             exibirEstoque();
         }
 
-        function filtrarEstoque() {
-            const filtro = document.getElementById("filterInput").value.toLowerCase();
-            const itensFiltrados = estoque.filter(item => item.descricao.toLowerCase().includes(filtro));
-            // Exibe apenas os itens filtrados:
-            const table = document.getElementById("estoqueTable");
-            table.innerHTML = ""; // Limpa a tabela
-            itensFiltrados.forEach((item, index) => {
-                const row = table.insertRow();
-                // ... (insere células com os dados do item) ...
-                // ... (adiciona botões de editar e remover) ...
-            });
-        }
+   function filtrarEstoque() {
+    const filtro = document.getElementById("filterInput").value.toLowerCase();
+    const itensFiltrados = estoque.filter(item => item.descricao.toLowerCase().includes(filtro));
+
+    const table = document.getElementById("estoqueTable");
+    table.innerHTML = `
+        <tr>
+            <th>Descrição</th>
+            <th>Quantidade</th>
+            <th>Manutenção</th>
+            <th>Ações</th>
+        </tr>
+    `; 
+
+    itensFiltrados.forEach((item, index) => {
+        const row = table.insertRow();
+        row.insertCell().textContent = item.descricao;
+        row.insertCell().textContent = item.quantidade;
+        row.insertCell().textContent = item.manutencao;
+
+        const actionsCell = row.insertCell();
+        actionsCell.innerHTML = `
+            <button onclick="editarItem(${index})">Editar</button>
+            <button onclick="removerItem(${index})">Remover</button>
+        `;
+    });
+}
 
         exibirEstoque();
     </script>
