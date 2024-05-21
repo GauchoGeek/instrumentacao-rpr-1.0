@@ -1,11 +1,10 @@
-const estoqueTable = document.getElementById("estoqueTable");
+const estoqueList = document.getElementById("estoqueList");
 const descInput = document.getElementById("descInput");
 const quantInput = document.getElementById("quantInput");
 const manutInput = document.getElementById("manutInput");
 
-// Carregar dados do LocalStorage ao iniciar
 let estoque = JSON.parse(localStorage.getItem("estoque")) || [];
-renderTable();
+renderList();
 
 function addItem() {
     const newItem = {
@@ -15,18 +14,32 @@ function addItem() {
     };
     estoque.push(newItem);
     localStorage.setItem("estoque", JSON.stringify(estoque));
-    renderTable();
+    renderList();
     clearInputs();
 }
 
-function renderTable() {
-    estoqueTable.innerHTML = `<tr><th>Descrição</th><th>Quantidade</th><th>Opções de Manutenção</th></tr>`;
+function renderList() {
+    estoqueList.innerHTML = ""; 
     estoque.forEach((item, index) => {
-        const row = estoqueTable.insertRow();
-        row.insertCell().textContent = item.descricao;
-        row.insertCell().textContent = item.quantidade;
-        row.insertCell().textContent = item.manutencao;
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `
+            ${item.descricao} - ${item.quantidade}
+            <button onclick="removeItem(${index})">Remover</button>
+            <button onclick="editItem(${index})">Editar</button>
+        `;
+        estoqueList.appendChild(listItem);
     });
+}
+
+function removeItem(index) {
+    estoque.splice(index, 1);
+    localStorage.setItem("estoque", JSON.stringify(estoque));
+    renderList();
+}
+
+function editItem(index) {
+    // Lógica para preencher o formulário com os dados do item e permitir a edição
+    // ...
 }
 
 function clearInputs() {
