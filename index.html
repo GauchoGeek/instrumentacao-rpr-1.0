@@ -21,7 +21,7 @@
 
         <input type="text" id="filterInput" placeholder="Filtrar por descrição" onkeyup="filtrarEstoque()">
 
-        <table id="estoqueTable"></table>
+        <button onclick="window.open('manometro.html', '_blank')">Manômetros</button> <table id="estoqueTable"></table>
 
         <h2>Adicionar Item:</h2>
         <input type="text" id="descricaoInput" placeholder="Descrição">
@@ -75,7 +75,7 @@
             const quantidade = parseInt(document.getElementById("quantidadeInput").value, 10);
             const manutencao = document.getElementById("manutencaoInput").value;
 
-            if (descricao && quantidade > 0) { // Validação básica
+            if (descricao && quantidade > 0) { 
                 estoque.push({ descricao, quantidade, manutencao });
                 exibirEstoque();
                 localStorage.setItem('estoque', JSON.stringify(estoque));
@@ -102,7 +102,7 @@
             const quantidade = parseInt(document.getElementById("editQuantidadeInput").value, 10);
             const manutencao = document.getElementById("editManutencaoInput").value;
             
-            if (descricao && quantidade > 0) { // Validação básica
+            if (descricao && quantidade > 0) { 
                 estoque[itemSendoEditado] = { descricao, quantidade, manutencao };
                 itemSendoEditado = null;
                 fecharModal();
@@ -124,7 +124,17 @@
         }
 
         function filtrarEstoque() {
-            // ... (mesma lógica da versão anterior) ...
+            const filtro = document.getElementById("filterInput").value.toLowerCase();
+            const linhas = document.getElementById("estoqueTable").getElementsByTagName("tr");
+
+            for (let i = 1; i < linhas.length; i++) { // Começa do 1 para pular o cabeçalho
+                const descricao = linhas[i].getElementsByTagName("td")[0].textContent.toLowerCase();
+                if (descricao.includes(filtro)) {
+                    linhas[i].style.display = "";
+                } else {
+                    linhas[i].style.display = "none";
+                }
+            }
         }
 
         exibirEstoque(); 
