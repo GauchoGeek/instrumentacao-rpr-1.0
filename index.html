@@ -12,7 +12,42 @@
         input, textarea { width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; }
         button { background-color: #007bff; color: white; padding: 10px 15px; border: none; cursor: pointer; border-radius: 5px; }
         button:hover { background-color: #0056b3; }
-        #editModal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); } 
+        #editModal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); }
+        #manometrosButton {
+            background-color: #28a745; /* Verde */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 20px; /* Espaçamento */
+        }
+        
+        #manometrosButton:hover {
+            background-color: #218838; /* Verde mais escuro */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Estoque de Instrumentos</h1>
+
+        <input type="text" id="filterInput" placeholder="Filtrar por descrição" onkeyup="filtrarEstoque()">
+
+        <button id="manometrosButton" onclick="window.open('https://github.com/SEU_USUARIO/SEU_REPOSITORIO/blob/main/manometros.html', '_blank')">Manômetros</button>
+
+        <table id="estoqueTable"></table>
+
+        <h2>Adicionar Item:</h2>
+        <input type="text" id="descricaoInput" placeholder="Descrição">
+        <input type="number" id="quantidadeInput" placeholder="Quantidade" value="1">
+        <textarea id="manutencaoInput" placeholder="Instruções de Manutenção"></textarea>
+        <button onclick="adicionarItem()">Adicionar</button>
+
+        <div id="editModal">
+            </div>
+    </div>
+    <script>
     </style>
 </head>
 <body>
