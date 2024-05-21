@@ -1,10 +1,10 @@
-const estoqueList = document.getElementById("estoqueList");
+const estoqueTable = document.getElementById("estoqueTable");
 const descInput = document.getElementById("descInput");
 const quantInput = document.getElementById("quantInput");
 const manutInput = document.getElementById("manutInput");
 
 let estoque = JSON.parse(localStorage.getItem("estoque")) || [];
-renderList();
+renderTable(); // Chame renderTable ao carregar a página
 
 function addItem() {
     const newItem = {
@@ -14,32 +14,34 @@ function addItem() {
     };
     estoque.push(newItem);
     localStorage.setItem("estoque", JSON.stringify(estoque));
-    renderList();
+    renderTable(); // Atualize a tabela após adicionar o item
     clearInputs();
 }
 
-function renderList() {
-    estoqueList.innerHTML = ""; 
+function renderTable() {
+    estoqueTable.innerHTML = `<tr><th>Descrição</th><th>Quantidade</th><th>Opções de Manutenção</th><th>Ações</th></tr>`; 
     estoque.forEach((item, index) => {
-        const listItem = document.createElement("li");
-        listItem.innerHTML = `
-            ${item.descricao} - ${item.quantidade}
+        const row = estoqueTable.insertRow();
+        row.insertCell().textContent = item.descricao;
+        row.insertCell().textContent = item.quantidade;
+        row.insertCell().textContent = item.manutencao;
+
+        const actionsCell = row.insertCell();
+        actionsCell.innerHTML = `
             <button onclick="removeItem(${index})">Remover</button>
             <button onclick="editItem(${index})">Editar</button>
         `;
-        estoqueList.appendChild(listItem);
     });
 }
 
 function removeItem(index) {
     estoque.splice(index, 1);
     localStorage.setItem("estoque", JSON.stringify(estoque));
-    renderList();
+    renderTable(); // Atualize a tabela após remover o item
 }
 
 function editItem(index) {
-    // Lógica para preencher o formulário com os dados do item e permitir a edição
-    // ...
+    // Lógica para editar o item... (a implementar)
 }
 
 function clearInputs() {
