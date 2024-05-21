@@ -2,133 +2,38 @@
 <html>
 <head>
     <title>Sistema de Estoque - Instrumentação</title>
-    <style>
-        body { font-family: sans-serif; }
-        #estoqueTable { width: 80%; margin: 20px auto; border-collapse: collapse; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .actions button { margin: 2px; padding: 5px 8px; }
-        .filter-container { text-align: center; margin-bottom: 10px; }
-        #editModal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border: 1px solid #ccc; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="container"> 
+        <h1>Estoque de Instrumentos</h1>
 
-    <h1>Estoque de Instrumentos</h1>
-    <div class="filter-container">
-        <input type="text" id="filterInput" placeholder="Filtrar por descrição">
+        <div class="filter-container">
+            <input type="text" id="filterInput" placeholder="Filtrar por descrição">
+        </div>
+
+        <table id="estoqueTable"></table>
+
+        <h2>Adicionar Item:</h2>
+        <div class="form-container">
+            <input type="text" id="descricaoInput" placeholder="Descrição">
+            <input type="number" id="quantidadeInput" placeholder="Quantidade" value="1">
+            <textarea id="manutencaoInput" placeholder="Instruções de Manutenção"></textarea>
+            <button onclick="adicionarItem()">Adicionar</button>
+        </div>
+
+        <div id="editModal">
+            <h2>Editar Item</h2>
+            <input type="text" id="editDescricaoInput">
+            <input type="number" id="editQuantidadeInput">
+            <textarea id="editManutencaoInput"></textarea>
+            <div class="modal-buttons">
+                <button onclick="salvarEdicao()">Salvar</button>
+                <button onclick="fecharModal()">Cancelar</button>
+            </div>
+        </div>
     </div>
 
-    <table id="estoqueTable"></table>
-
-    <h2>Adicionar Item:</h2>
-    <input type="text" id="descricaoInput" placeholder="Descrição">
-    <input type="number" id="quantidadeInput" placeholder="Quantidade" value="1">
-    <textarea id="manutencaoInput" placeholder="Instruções de Manutenção"></textarea>
-    <button onclick="adicionarItem()">Adicionar</button>
-
-    <div id="editModal">
-        <h2>Editar Item</h2>
-        <input type="text" id="editDescricaoInput">
-        <input type="number" id="editQuantidadeInput">
-        <textarea id="editManutencaoInput"></textarea>
-        <button onclick="salvarEdicao()">Salvar</button>
-        <button onclick="fecharModal()">Cancelar</button>
-    </div>
-
-    <script>
-        let estoque = JSON.parse(localStorage.getItem('estoque')) || [];
-        let editIndex = -1; // Índice do item sendo editado
-
-        function atualizarTabela() {
-            const filtro = document.getElementById("filterInput").value.toLowerCase();
-            const tabela = document.getElementById("estoqueTable");
-            tabela.innerHTML = `<tr><th>Descrição</th><th>Quantidade</th><th>Manutenção</th><th>Ações</th></tr>`;
-            estoque.forEach((item, index) => {
-                if (item.descricao.toLowerCase().includes(filtro)) {
-                    const linha = tabela.insertRow();
-                    linha.insertCell().textContent = item.descricao;
-                    linha.insertCell().textContent = item.quantidade;
-                    linha.insertCell().textContent = item.manutencao;
-                    const acoesCell = linha.insertCell();
-                    const removerBtn = document.createElement("button");
-                    removerBtn.textContent = "Remover";
-                    removerBtn.onclick = () => removerItem(index);
-                    acoesCell.appendChild(removerBtn);
-                    const editarBtn = document.createElement("button");
-                    editarBtn.textContent = "Editar";
-                    editarBtn.onclick = () => editarItem(index);
-                    acoesCell.appendChild(editarBtn);
-                }
-            });
-        }
-
-        function adicionarItem() {
-            estoque.push({
-                descricao: document.getElementById("descricaoInput").value,
-                quantidade: parseInt(document.getElementById("quantidadeInput").value),
-                manutencao: document.getElementById("manutencaoInput").value
-            });
-            limparCampos();
-            atualizarTabela();
-            salvarEstoque();
-        }
-
-        function removerItem(index) {
-            estoque.splice(index, 1);
-            atualizarTabela();
-            salvarEstoque();
-        }
-
-        function editarItem(index) {
-            editIndex = index;
-            const item = estoque[index];
-            document.getElementById("editDescricaoInput").value = item.descricao;
-            document.getElementById("editQuantidadeInput").value = item.quantidade;
-            document.getElementById("editManutencaoInput").value = item.manutencao;
-            document.getElementById("editModal").style.display = "block";
-        }
-
-        function salvarEdicao() {
-            estoque[editIndex] = {
-                descricao: document.getElementById("editDescricaoInput").value,
-                quantidade: parseInt(document.getElementById("editQuantidadeInput").value),
-                manutencao: document.getElementById("editManutencaoInput").value
-            };
-            fecharModal();
-            atualizarTabela();
-            salvarEstoque();
-        }
-
-        function fecharModal() {
-            document.getElementById("editModal").style.display = "none";
-            limparCampos();
-        }
-
-        function limparCampos() {
-            document.getElementById("descricaoInput").value = "";
-            document.getElementById("quantidadeInput").value = "1";
-            document.getElementById("manutencaoInput").value = "";
-            document.getElementById("editDescricaoInput").value = "";
-            document.getElementById("editQuantidadeInput").value = "";
-            document.getElementById("editManutencaoInput").value = "";
-        }
-
-        function salvarEstoque() {
-            localStorage.setItem('estoque', JSON.stringify(estoque));
-        }
-
-        document.getElementById("filterInput").addEventListener("input", atualizarTabela);
-
-        document.addEventListener("click", (event) => {
-            if (event.target && event.target.tagName === "TH") {
-                const prop = event.target.textContent.toLowerCase();
-                estoque.sort((a, b) => (a[prop] > b[prop]) ? 1 : -1);
-                atualizarTabela();
-            }
-        });
-
-        atualizarTabela(); // Chamada inicial para carregar os dados do localStorage
-    </script>
+    <script src="script.js"></script> 
 </body>
 </html>
