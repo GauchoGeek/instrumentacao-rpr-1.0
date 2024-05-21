@@ -4,17 +4,32 @@
     <title>Estoque de Instrumentos</title>
     <style>
         /* ... (estilos existentes) ... */
+
+        /* Estilo para o botão Manômetros */
+        #manometrosButton {
+            background-color: #28a745; /* Verde */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 20px; /* Espaçamento */
+        }
+
+        #manometrosButton:hover {
+            background-color: #218838; /* Verde mais escuro */
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <button id="manometrosButton" onclick="window.open('https://github.com/SEU_USUARIO/SEU_REPOSITORIO/blob/main/manometros.html', '_blank')">Manômetros</button> 
-
         <h1>Estoque de Instrumentos</h1>
 
-        <input type="text" id="filterInput" placeholder="Filtrar por descrição">
+        <input type="text" id="filterInput" placeholder="Filtrar por descrição" onkeyup="filtrarEstoque()">
 
-        <table id="estoqueTable"></table> 
+        <button id="manometrosButton" onclick="window.open('https://github.com/SEU_USUARIO/SEU_REPOSITORIO/blob/main/manometros.html', '_blank')">Manômetros</button>
+
+        <table id="estoqueTable"></table>
 
         <h2>Adicionar Item:</h2>
         <input type="text" id="descricaoInput" placeholder="Descrição">
@@ -27,57 +42,7 @@
     </div>
 
     <script>
-        let estoque = JSON.parse(localStorage.getItem('estoque')) || [];
-        let itemSendoEditado = null;
-
-        function exibirEstoque() {
-            const table = document.getElementById("estoqueTable");
-            table.innerHTML = `
-                <tr>
-                    <th>Descrição</th>
-                    <th>Quantidade</th>
-                    <th>Manutenção</th>
-                    <th>Ações</th>
-                </tr>
-            `;
-
-            estoque.forEach((item, index) => {
-                const row = table.insertRow();
-                row.insertCell().textContent = item.descricao;
-                row.insertCell().textContent = item.quantidade;
-                row.insertCell().textContent = item.manutencao;
-
-                const actionsCell = row.insertCell();
-                actionsCell.innerHTML = `
-                    <button onclick="editarItem(${index})">Editar</button>
-                    <button onclick="removerItem(${index})">Remover</button>
-                `;
-            });
-
-            filtrarEstoque(); // Chama a função de filtragem após exibir a tabela
-        }
-
-        function filtrarEstoque() {
-            const filterValue = document.getElementById("filterInput").value.toUpperCase();
-            const rows = document.getElementById("estoqueTable").getElementsByTagName("tr");
-            
-            for (let i = 1; i < rows.length; i++) { // Começa em 1 para ignorar o cabeçalho
-                let descricao = rows[i].getElementsByTagName("td")[0]; // Obtém a célula da descrição
-                
-                if (descricao) {
-                    let txtValue = descricao.textContent || descricao.innerText;
-                    if (txtValue.toUpperCase().indexOf(filterValue) > -1) {
-                        rows[i].style.display = "";
-                    } else {
-                        rows[i].style.display = "none";
-                    }
-                }
-            }
-        }
-
-        // ... (restante do código JavaScript) ...
-
-        exibirEstoque(); // Chama a função para exibir a tabela inicial
+        // ... (código JavaScript existente) ...
     </script>
 </body>
 </html>
