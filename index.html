@@ -3,7 +3,17 @@
 <head>
     <title>Estoque de Instrumentos</title>
     <style>
-        /* O mesmo CSS do código anterior */
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; }
+        .container { max-width: 800px; margin: 20px auto; padding: 20px; background-color: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
+        h1, h2 { color: #007bff; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #007bff; color: white; }
+        input, textarea { width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 4px; }
+        button { background-color: #007bff; color: white; padding: 10px 15px; border: none; cursor: pointer; border-radius: 4px; }
+        button:hover { background-color: #0056b3; }
+        #editModal { display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.4); }
+        .modal-content { background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 30%; }
     </style>
 </head>
 <body>
@@ -12,7 +22,7 @@
 
         <input type="text" id="filterInput" placeholder="Filtrar por descrição" onkeyup="filtrarEstoque()">
 
-        <button onclick="window.open('manometros.html', '_blank')">Manômetros</button> 
+        <button onclick="window.open('manometros.html', '_blank')">Manômetros</button>
         <table id="estoqueTable"></table>
 
         <h2>Adicionar Item:</h2>
@@ -21,8 +31,17 @@
         <textarea id="manutencaoInput" placeholder="Instruções de Manutenção"></textarea>
         <button onclick="adicionarItem()">Adicionar</button>
 
-        <div id="editModal">
-            <!-- O mesmo HTML do modal de edição do código anterior -->
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <h2>Editar Item</h2>
+                <input type="text" id="editDescricaoInput">
+                <input type="number" id="editQuantidadeInput">
+                <textarea id="editManutencaoInput"></textarea>
+                <div>
+                    <button onclick="salvarEdicao()">Salvar</button>
+                    <button onclick="fecharModal()">Cancelar</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -87,8 +106,6 @@
                 alert("Preencha todos os campos corretamente.");
             }
         }
-        // As funções editarItem, salvarEdicao, fecharModal e removerItem seriam similares,
-        // mas com as chamadas à API para atualizar e remover itens do estoque.
 
         function editarItem(index) {
             fetch(`${apiUrl}/${index}`)
