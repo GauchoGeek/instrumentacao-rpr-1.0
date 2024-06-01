@@ -82,31 +82,30 @@
 
         // Função para adicionar um novo item
         function adicionarItem() {
-            const descricao = document.getElementById("descricaoInput").value;
-            const quantidade = parseInt(document.getElementById("quantidadeInput").value, 10);
-            const manutencao = document.getElementById("manutencaoInput").value;
+    const descricao = document.getElementById("descricaoInput").value;
+    const quantidade = parseInt(document.getElementById("quantidadeInput").value, 10);
+    const manutencao = document.getElementById("manutencaoInput").value;
 
-            if (descricao && quantidade > 0) {
-                fetch(apiUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ descricao, quantidade, manutencao })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    exibirEstoque();
-                    document.getElementById("descricaoInput").value = "";
-                    document.getElementById("quantidadeInput").value = 1;
-                    document.getElementById("manutencaoInput").value = "";
-                })
-                .catch(error => console.error('Erro ao adicionar item:', error));
-            } else {
-                alert("Preencha todos os campos corretamente.");
-            }
-        }
-
+    if (descricao && quantidade > 0) {
+        fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ descricao, quantidade, manutencao })
+        })
+        .then(response => response.json())
+        .then(data => {
+            exibirEstoque();
+            document.getElementById("descricaoInput").value = "";
+            document.getElementById("quantidadeInput").value = 1;
+            document.getElementById("manutencaoInput").value = "";
+        })
+        .catch(error => console.error('Erro ao adicionar item:', error));
+    } else {
+        alert("Preencha todos os campos corretamente.");
+    }
+}
         function editarItem(index) {
             fetch(`${apiUrl}/${index}`)
                 .then(response => response.json())
