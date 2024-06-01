@@ -1,179 +1,93 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Estoque de Instrumentos</title>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; }
-        .container { max-width: 800px; margin: 20px auto; padding: 20px; background-color: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
-        h1, h2 { color: #007bff; }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        th { background-color: #007bff; color: white; }
-        input, textarea { width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 4px; }
-        button { background-color: #007bff; color: white; padding: 10px 15px; border: none; cursor: pointer; border-radius: 4px; }
-        button:hover { background-color: #0056b3; }
-        #editModal { display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.4); }
-        .modal-content { background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 30%; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Estoque de Instrumentos</h1>
-
-        <input type="text" id="filterInput" placeholder="Filtrar por descrição" onkeyup="filtrarEstoque()">
-
-        <button onclick="window.open('manometros.html', '_blank')">Manômetros</button>
-        <table id="estoqueTable"></table>
-
-        <h2>Adicionar Item:</h2>
-        <input type="text" id="descricaoInput" placeholder="Descrição">
-        <input type="number" id="quantidadeInput" placeholder="Quantidade" value="1">
-        <textarea id="manutencaoInput" placeholder="Instruções de Manutenção"></textarea>
-        <button onclick="adicionarItem()">Adicionar</button>
-
-        <div id="editModal" class="modal">
-            <div class="modal-content">
-                <h2>Editar Item</h2>
-                <input type="text" id="editDescricaoInput">
-                <input type="number" id="editQuantidadeInput">
-                <textarea id="editManutencaoInput"></textarea>
-                <div>
-                    <button onclick="salvarEdicao()">Salvar</button>
-                    <button onclick="fecharModal()">Cancelar</button>
-                </div>
-            </div>
-        </div>
-    </div>
+  <head>
+    <title>Controle de Estoque</title>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+  </head>
+  <body>
+    <h1>Controle de Estoque</h1>
+    <input type="text" id="newItem" placeholder="Novo item" />
+    <button onclick="addItem()">Adicionar</button>
+    <ul id="itemList"></ul>
 
     <script>
-        // Endpoint da API para acessar o estoque
-        const apiUrl = 'https://exemplo.com/api/estoque';
+      // Configuração do Firebase
+      const firebaseConfig = {
+        // Insira as credenciais do seu projeto Firebase aqui
+      };
 
-        // Função para exibir o estoque
-        function exibirEstoque() {
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    const table = document.getElementById("estoqueTable");
-                    table.innerHTML = `
-                        <tr>
-                            <th>Descrição</th>
-                            <th>Quantidade</th>
-                            <th>Manutenção</th>
-                            <th>Ações</th>
-                        </tr>
-                    `;
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
 
-                    data.forEach((item, index) => {
-                        const row = table.insertRow();
-                        row.insertCell().textContent = item.descricao;
-                        row.insertCell().textContent = item.quantidade;
-                        row.insertCell().textContent = item.manutencao;
-
-                        const actionsCell = row.insertCell();
-                        actionsCell.innerHTML = `
-                            <button onclick="editarItem(${index})">Editar</button>
-                            <button onclick="removerItem(${index})">Remover</button>
-                        `;
-                    });
-                })
-                .catch(error => console.error('Erro ao carregar o estoque:', error));
-        }
-
-        // Função para adicionar um novo item
-        function adicionarItem() {
-    const descricao = document.getElementById("descricaoInput").value;
-    const quantidade = parseInt(document.getElementById("quantidadeInput").value, 10);
-    const manutencao = document.getElementById("manutencaoInput").value;
-
-    if (descricao && quantidade > 0) {
-        fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ descricao, quantidade, manutencao })
-        })
-        .then(response => response.json())
-        .then(data => {
-            exibirEstoque();
-            document.getElementById("descricaoInput").value = "";
-            document.getElementById("quantidadeInput").value = 1;
-            document.getElementById("manutencaoInput").value = "";
-        })
-        .catch(error => console.error('Erro ao adicionar item:', error));
-    } else {
-        alert("Preencha todos os campos corretamente.");
-    }
-}
-        function editarItem(index) {
-            fetch(`${apiUrl}/${index}`)
-                .then(response => response.json())
-                .then(item => {
-                    itemSendoEditado = index;
-                    document.getElementById("editDescricaoInput").value = item.descricao;
-                    document.getElementById("editQuantidadeInput").value = item.quantidade;
-                    document.getElementById("editManutencaoInput").value = item.manutencao;
-                    document.getElementById("editModal").style.display = "block";
-                })
-                .catch(error => console.error('Erro ao carregar item:', error));
-        }
-
-        function salvarEdicao() {
-            const descricao = document.getElementById("editDescricaoInput").value;
-            const quantidade = parseInt(document.getElementById("editQuantidadeInput").value, 10);
-            const manutencao = document.getElementById("editManutencaoInput").value;
-
-            if (descricao && quantidade > 0) {
-                fetch(`${apiUrl}/${itemSendoEditado}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ descricao, quantidade, manutencao })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    itemSendoEditado = null;
-                    fecharModal();
-                    exibirEstoque();
-                })
-                .catch(error => console.error('Erro ao salvar edição:', error));
-            } else {
-                alert("Preencha todos os campos corretamente.");
-            }
-        }
-
-        function fecharModal() {
-            document.getElementById("editModal").style.display = "none";
-        }
-
-        function removerItem(index) {
-            fetch(`${apiUrl}/${index}`, {
-                method: 'DELETE'
+      // Função para adicionar um novo item
+      function addItem() {
+        const newItemInput = document.getElementById("newItem");
+        const newItem = newItemInput.value.trim();
+        if (newItem) {
+          db.collection("items")
+            .add({ name: newItem })
+            .then(() => {
+              newItemInput.value = "";
+              loadItems();
             })
-            .then(response => response.json())
-            .then(data => {
-                exibirEstoque();
-            })
-            .catch(error => console.error('Erro ao remover item:', error));
+            .catch((error) => {
+              console.error("Erro ao adicionar item:", error);
+            });
         }
+      }
 
-        function filtrarEstoque() {
-            const filtro = document.getElementById("filterInput").value.toLowerCase();
-            const linhas = document.getElementById("estoqueTable").getElementsByTagName("tr");
+      // Função para carregar os itens do banco de dados
+      function loadItems() {
+        const itemList = document.getElementById("itemList");
+        itemList.innerHTML = "";
 
-            for (let i = 1; i < linhas.length; i++) {
-                const descricao = linhas[i].getElementsByTagName("td")[0].textContent.toLowerCase();
-                if (descricao.includes(filtro)) {
-                    linhas[i].style.display = "";
-                } else {
-                    linhas[i].style.display = "none";
-                }
-            }
-        }
+        db.collection("items")
+          .onSnapshot((snapshot) => {
+            snapshot.docChanges().forEach((change) => {
+              if (change.type === "added") {
+                const item = change.doc.data();
+                const li = document.createElement("li");
+                const input = document.createElement("input");
+                input.type = "text";
+                input.value = item.name;
+                input.onchange = () => updateItem(change.doc.id, input.value);
+                const button = document.createElement("button");
+                button.textContent = "Remover";
+                button.onclick = () => deleteItem(change.doc.id);
+                li.appendChild(input);
+                li.appendChild(button);
+                itemList.appendChild(li);
+              }
+            });
+          })
+          .catch((error) => {
+            console.error("Erro ao carregar itens:", error);
+          });
+      }
 
-        exibirEstoque();
+      // Função para atualizar um item
+      function updateItem(id, name) {
+        db.collection("items")
+          .doc(id)
+          .update({ name })
+          .catch((error) => {
+            console.error("Erro ao atualizar item:", error);
+          });
+      }
+
+      // Função para remover um item
+      function deleteItem(id) {
+        db.collection("items")
+          .doc(id)
+          .delete()
+          .catch((error) => {
+            console.error("Erro ao remover item:", error);
+          });
+      }
+
+      // Carrega os itens iniciais
+      loadItems();
     </script>
-</body>
+  </body>
 </html>
